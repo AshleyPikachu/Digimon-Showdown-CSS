@@ -9,5 +9,6 @@ Generates a basic CSS template for Digimon-Showdown.
 
 # Credits
 - [Zarel](https://github.com/Zarel/) (Owner of [Pokemon-Showdown](https://github.com/Zarel/Pokemon-Showdown))
-- Ashley the Pikachu (Project Head)
+- [Ashley the Pikachu](https://github.com/AshleyPikachu) (Project Head)
+- [AlfaStorm](https://github.com/AlphaWind) (Developer - Digimon Showdown)
 - Digimon-Showdown Contributors
