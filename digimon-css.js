@@ -57,14 +57,14 @@ for (const digimon in digimons) {
 
 .innerbattle div > img[src*="bw/${digi.id}"] {
     content: url("https://play.pokemonshowdown.com/sprites/digimon/sprites/digimonani/${digi.id}.gif");
-    width: auto;
-    height: auto;
+    width: 56px;
+    height: 56px;
 }
 
 .innerbattle div > img[src*="bw-back/${digi.id}"] {
     content: url("https://play.pokemonshowdown.com/sprites/digimon/sprites/digimonani-back/${digi.id}.gif");
-    width: auto;
-    height: auto;
+    width: 56px;
+    height: 56px;
 }
 
 .innerbattle .picon[aria-label*="(${digi.id})"],
