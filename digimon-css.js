@@ -89,7 +89,7 @@ for (const move in moves) {
 .movemenu button[data-move="${moveObj.name}"]:after {
     white-space: pre;
     font-size: 0.7em;
-    content: "\A ${moveObj.desc}";
+    content: "\\A ${moveObj.desc}";
 }
 `;
 }

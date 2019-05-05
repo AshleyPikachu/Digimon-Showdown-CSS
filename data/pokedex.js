@@ -1,7 +1,6 @@
 'use strict';
 
-/**@type {{[k: string]: ModdedTemplateData}} */
-let BattlePokedex = {
+const BattlePokedex = {
 	botamon: {
 		num: -2000,
 		species: "Botamon",

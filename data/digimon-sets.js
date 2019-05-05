@@ -1,5 +1,6 @@
-/** @type {DigimonSets} */
-let sets = {
+'use strict';
+
+const sets = {
 	//Fresh//
 	"Botamon": {
 		species: "Botamon",

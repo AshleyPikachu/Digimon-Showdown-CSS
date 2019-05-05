@@ -61,7 +61,7 @@ for (const digimon in DigiDex) {
 }
 
 // TYPES
-const origTypes = require('./data/orig-types').BattleTypeChart;
+const origTypes = require('./data/orig-typechart').BattleTypeChart;
 const DigiTypes = require('./data/typechart').BattleTypeChart;
 const newTypeChart = {};
 

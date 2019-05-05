@@ -1,8 +1,6 @@
 'use strict';
 
-// 1 SE 2 Resist 3 immune
-/**@type {{[k: string]: ModdedTypeData}} */
-let BattleTypeChart = {
+const BattleTypeChart = {
 	"Flame": {
 		damageTaken: {
 			brn: 3,

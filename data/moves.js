@@ -1,7 +1,6 @@
 'use strict';
 
-/**@type {{[k: string]: ModdedMoveData}} */
-let BattleMovedex = {
+const BattleMovedex = {
 	"acidbubble": {
 		accuracy: 90,
 		basePower: 60,
