@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const CleanCSS = require('clean-css');
 
 const digimonsExist = fs.existsSync('./digimons.json');
 const movesExist = fs.existsSync('./moves.json');
@@ -57,17 +58,17 @@ for (const digimon in digimons) {
 
 .innerbattle div > img[src*="bw/${digi.id}"] {
     content: url("https://play.pokemonshowdown.com/sprites/digimon/sprites/digimonani/${digi.id}.gif");
-    width: 56px;
-    height: 56px;
+    width: 56px !important;
+    height: 56px !important;
 }
 
 .innerbattle div > img[src*="bw-back/${digi.id}"] {
     content: url("https://play.pokemonshowdown.com/sprites/digimon/sprites/digimonani-back/${digi.id}.gif");
-    width: 56px;
-    height: 56px;
+    width: 56px !important;
+    height: 56px !important;
 }
 
-.innerbattle .picon[aria-label*="(${digi.id})"],
+.innerbattle .picon[aria-label*="(${digi.name ? digi.species.replace(/[^A-Za-z0-9]/g, "").replace(/\s/g, "") : digi.id})"],
 .innerbattle .picon[aria-label^="${digi.species}"],
 button[value*="${digi.name ? digi.name : digi.species}"] .picon {
 	content: url("https://res.cloudinary.com/dragotic/image/upload/v1556978199/${digi.id}.png");
@@ -106,7 +107,7 @@ for (const move in moves) {
 .movemenu button[data-move="${moveObj.name}"]:after {
     white-space: pre;
     font-size: 0.7em;
-    content: "\\A ${moveObj.desc}";
+    content: "${moveObj.desc}";
 }
 `;
 }
@@ -129,3 +130,9 @@ img[src*="${type}.png"] {
 
 fs.writeFileSync('./digimon.css', CSS, 'utf8');
 console.log('Successfully wrote Digimon-Showdown-CSS!');
+
+// Minified CSS
+const CSSmin = new CleanCSS().minify(CSS).styles;
+
+fs.writeFileSync('./digimon-min.css', CSSmin, 'utf8');
+console.log('Minified Digimon-Showdown-CSS generated!');
