@@ -35,8 +35,8 @@ div[id*="digimon"] .innerbattle .backdrop {
 }
 
 div[id*="digimon"] .movemenu button {
-	height: 60px;
-	width: 48%;
+    height: 60px;
+    width: 48%;
     margin: 0.5%;
     overflow: hidden;
 }
