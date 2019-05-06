@@ -38,6 +38,7 @@ div[id*="digimon"] .movemenu button {
 	height: 60px;
 	width: 48%;
     margin: 0.5%;
+    overflow: hidden;
 }
 
 div[id*="digimon"] button[name="chooseSwitch"],
@@ -49,6 +50,14 @@ div[id*="digimon"] button.disabled {
 div[id*="digimon"] .teamicons .picon[aria-label="Not revealed"] {
     background: url("http://play.pokemonshowdown.com/sprites/digimon/sprites/xyicons-pokeball-sheet.png") !important;
 }
+
+/*
+disables types popping up below the hpbar
+only enable it if you're using the changeType event
+div[id*="digimon"] .status img[src*="/sprites/types/"] {
+    display: none;
+}
+*/
 `;
 
 CSS += `
@@ -99,20 +108,21 @@ for (const move in moves) {
         CSS += `
 .movemenu button[data-move="${moveObj.name}"],
 .movemenu button[data-move="${moveObj.name}"]:hover {
-    background: #E3E3E3 url("${typeImages[moveObj.type]}") 1% 2% no-repeat;
+    background: #E3E3E3 url("${typeImages[moveObj.type]}") 1% 0.15em no-repeat;
 }
 
 .movemenu button[data-move="${moveObj.name}"] .type:after {
     font-weight: bold;
-    content: "(${moveObj.type})";
-}`;
+    content: "(${moveObj.type}) [${moveObj.category}]";
+}
+`;
     }
 
     CSS += `
 .movemenu button[data-move="${moveObj.name}"]:after {
-    white-space: pre;
     font-size: 0.7em;
-    content: "${moveObj.desc}";
+    content: "(${moveObj.desc})";
+    padding: 0 5%;
 }
 `;
 }

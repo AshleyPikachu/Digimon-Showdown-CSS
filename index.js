@@ -16,7 +16,10 @@ for (const move in MoveDex) {
         name: currMove.name,
         desc: MoveDex[move].shortDesc,
     };
-    if (!onlyDesc) newObj.type = currMove.type;
+    if (!onlyDesc) {
+        newObj.type = currMove.type;
+        newObj.category = currMove.category;
+    }
 
     newMoveDex[move] = newObj;
 }
