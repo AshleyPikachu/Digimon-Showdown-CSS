@@ -31,7 +31,8 @@ let CSS = `
  ************************/
 
 div[id*="digimon"] .innerbattle .backdrop {
-	background-image: url("https://sig.grumpybumpers.com/host/Dragotic.gif") !important;
+    background-image: url("https://sig.grumpybumpers.com/host/Dragotic.gif") !important;
+    background-position: 0 -20px;
 }
 
 div[id*="digimon"] .movemenu button {
@@ -119,7 +120,7 @@ for (const move in moves) {
     }
 
     CSS += `
-.movemenu button[data-move="${moveObj.name}"]:after {
+div[id*="digimon"] .movemenu button[data-move="${moveObj.name}"]:after {
     font-size: 0.7em;
     content: "(${moveObj.desc})";
     padding: 0 5%;
