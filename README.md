@@ -4,6 +4,7 @@ Generates a basic CSS template for Digimon-Showdown.
 # Usage
 (NOTE: Node.js is required)
 - Open `Command Prompt` in the `Digimon-Showdown-CSS` directory.
+- Type `npm install` to install `clean-css` for generating minified CSS
 - Type `node index.js` to prepare the files necessary for the CSS
 - Type `node digimon-css.js` to prepare the `digimon.css` file
 
