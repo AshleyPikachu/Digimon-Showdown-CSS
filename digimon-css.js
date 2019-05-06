@@ -43,7 +43,7 @@ div[id*="digimon"] .movemenu button {
 
 div[id*="digimon"] button[name="chooseSwitch"],
 div[id*="digimon"] button.disabled {
-	width: 15%;
+    width: 15%;
     margin-right: 1.5%;
 }
 
@@ -136,9 +136,9 @@ for (const type in types) {
 /** TYPE: ${type} CSS **/
 
 img[src*="${type}.png"] {
-	content: url("https://play.pokemonshowdown.com/sprites/digimon/sprites/types/${type}.png");
-	width: auto;
-	height: auto;
+    content: url("https://play.pokemonshowdown.com/sprites/digimon/sprites/types/${type}.png");
+    width: auto;
+    height: auto;
 }
 `;
 }
