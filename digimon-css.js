@@ -36,13 +36,18 @@ div[id*="digimon"] .innerbattle .backdrop {
 
 div[id*="digimon"] .movemenu button {
 	height: 60px;
-	width: 45%;
-	text-transform: capitalize;
+	width: 48%;
+    margin: 0.5%;
 }
 
 div[id*="digimon"] button[name="chooseSwitch"],
 div[id*="digimon"] button.disabled {
-	width: 20%;
+	width: 15%;
+    margin-right: 1.5%;
+}
+
+div[id*="digimon"] .teamicons .picon[aria-label="Not revealed"] {
+    background: url("http://play.pokemonshowdown.com/sprites/digimon/sprites/xyicons-pokeball-sheet.png") !important;
 }
 `;
 
@@ -68,13 +73,13 @@ for (const digimon in digimons) {
     height: 56px !important;
 }
 
-.innerbattle .picon[aria-label*="(${digi.name ? digi.species.replace(/[^A-Za-z0-9]/g, "").replace(/\s/g, "") : digi.id})"],
-.innerbattle .picon[aria-label^="${digi.species}"],
+.innerbattle .picon[aria-label^="${digi.species.replace(/\W/g, '').replace(/\s/g, '')}"],
 button[value*="${digi.name ? digi.name : digi.species}"] .picon {
-	content: url("https://res.cloudinary.com/dragotic/image/upload/v1556978199/${digi.id}.png");
-	width: auto;
-	height: auto;
-	margin: 3%;
+    background: none !important;
+    content: url("https://res.cloudinary.com/dragotic/image/upload/v1556978199/${digi.id}.png") !important;
+    width: auto;
+    height: auto;
+    margin: 7%;
 }
 `;
 }
