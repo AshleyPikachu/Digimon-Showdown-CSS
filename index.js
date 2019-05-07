@@ -19,6 +19,7 @@ for (const move in MoveDex) {
     if (!onlyDesc) {
         newObj.type = currMove.type;
         newObj.category = currMove.category;
+        newObj.accuracy = currMove.accuracy;
     }
 
     newMoveDex[move] = newObj;
@@ -58,7 +59,10 @@ for (const digimon in DigiDex) {
         id: digimon,
         species: getSpecies(currDigi.species),
     };
-    if (hasName) newObj.name = digiName;
+    if (hasName) {
+        newObj.name = digiName;
+        newObj.specialName = DigiSets[currDigi.species].species;
+    }
 
     newDigiDex[digimon] = newObj;
 }

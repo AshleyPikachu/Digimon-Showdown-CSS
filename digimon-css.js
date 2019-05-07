@@ -12,6 +12,7 @@ if (!digimonsExist || !movesExist || !typesExist) return console.log('RUN `node 
 const digimons = JSON.parse(fs.readFileSync('./digimons.json', 'utf8'));
 const moves = JSON.parse(fs.readFileSync('./moves.json', 'utf8'));
 const types = JSON.parse(fs.readFileSync('./typechart.json', 'utf8'));
+const positions = JSON.parse(fs.readFileSync('./positions.json', 'utf8'));
 
 const typeImages = {
     'Air': 'https://cdn.discordapp.com/attachments/357714356915666954/476516530251890691/Air.png',
@@ -83,13 +84,10 @@ for (const digimon in digimons) {
     height: 56px !important;
 }
 
-.innerbattle .picon[aria-label^="${digi.species.replace(/\W/g, '').replace(/\s/g, '')}"],
+.innerbattle .picon[aria-label*="${digi.specialName ? `(${digi.specialName})` : digi.species.replace(/\W/g, '').replace(/\s/g, '')}"],
+.innerbattle .picon[aria-label^="${digi.id}"],
 button[value*="${digi.name ? digi.name : digi.species}"] .picon {
-    background: none !important;
-    content: url("https://res.cloudinary.com/dragotic/image/upload/v1556978199/${digi.id}.png") !important;
-    width: auto;
-    height: auto;
-    margin: 7%;
+    background: url("https://res.cloudinary.com/dragotic/image/upload/v1557211925/digimonicons-sheet.png") no-repeat scroll ${positions[digi.id].x}px ${positions[digi.id].y}px !important;
 }
 `;
 }
