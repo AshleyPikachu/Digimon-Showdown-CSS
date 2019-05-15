@@ -18,8 +18,9 @@ for (const move in MoveDex) {
     };
     if (!onlyDesc) {
         newObj.type = currMove.type;
+        newObj.basePower = currMove.basePower;
         newObj.category = currMove.category;
-        newObj.accuracy = currMove.accuracy;
+        newObj.accuracy = typeof currMove.accuracy === 'boolean' ? '-' : currMove.accuracy;
     }
 
     newMoveDex[move] = newObj;
