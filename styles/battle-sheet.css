@@ -1,0 +1,14 @@
+/** %species CSS **/
+
+.innerbattle div > div > img[src*="bw/%id"] {
+    content: url('https://play.pokemonshowdown.com/sprites/digimon/sprites/digimonani/%id.gif');
+}
+
+.innerbattle div > div > img[src*="bw-back/%id"] {
+    content: url('https://play.pokemonshowdown.com/sprites/digimon/sprites/digimonani-back/%id.gif');
+}
+
+.innerbattle .picon[aria-label^="%name"],
+button[value^="%nameORspecies"] .picon {
+    background: url('%icon_sheet') no-repeat scroll %xpx %ypx !important;
+}

@@ -1,7 +1,5 @@
-*.html
-*.css
 *.json
 !package.json
-!positions.json
-positions.js
 node_modules
+ds-css
+ds-data

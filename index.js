@@ -1,94 +1,146 @@
 'use strict';
 
-const fs = require('fs');
+const execSync = require('child_process').execSync;
+const { existsSync, readdirSync, readFileSync, writeFileSync } = require('fs');
+const join = require('path').join;
 
-// MOVES
-const origMoveDex = require('./data/orig-moves').BattleMovedex;
-const MoveDex = require('./data/moves').BattleMovedex;
-const newMoveDex = {};
-
-// FILTER MOVES
-for (const move in MoveDex) {
-    const currMove = MoveDex[move].name ? MoveDex[move] : origMoveDex[move];
-    const onlyDesc = MoveDex[move].name ? false : true;
-    const newObj = {
-        id: currMove.id,
-        name: currMove.name,
-        desc: MoveDex[move].shortDesc,
-    };
-    if (!onlyDesc) {
-        newObj.type = currMove.type;
-        newObj.basePower = currMove.basePower;
-        newObj.category = currMove.category;
-        newObj.accuracy = typeof currMove.accuracy === 'boolean' ? '-' : currMove.accuracy;
-    }
-
-    newMoveDex[move] = newObj;
+// DATA DIRECTORY
+const DATA_DIR = join(__dirname, '/ds-data');
+if (!existsSync(DATA_DIR)) {
+    console.log(`"${join(__dirname, '/ds-data')}" could not be found. Creating data files...\n`);
+    execSync('node build');
 }
 
-// DIGIDEX
-const DigiDex = require('./data/pokedex').BattlePokedex;
-const DigiSets = require('./data/digimon-sets').Sets;
-const newDigiDex = {};
+// IMPORT DATA FILES
+const digimonShowdown = {};
+readdirSync(DATA_DIR).forEach(dataFile => {
+    if (dataFile.endsWith('.json')) {
+        const fileName = dataFile.substring(0, dataFile.lastIndexOf('.'));
+        digimonShowdown[fileName] = JSON.parse(readFileSync(`${DATA_DIR}/${dataFile}`));
+    }
+});
 
-/** 
- * @param {string} spcies 
- */
-const getSpecies = (species) => {
-	switch (species) {
-        case 'MeicrackmonViciousMode':
-            return 'Meicrackmon [Vicious Mode]';
-        case 'CherubimonEvil':
-            return 'Cherubimon [Evil]';
-        case 'CherubimonGood':
-            return 'Cherubimon [Good]';
-        case 'MetalGreymonVaccine':
-            return 'MetalGreymon [Vaccine]';
-        case 'MetalGreymonVirus':
-            return 'MetalGreymon [Virus]';
-        default:
-            return species;
-	}
+// "COMPILE" RESOURCES
+const graphicResources = {
+    move_panels: {},
+    battle_type_images: {},
+    icon_sheet: 'https://res.cloudinary.com/dragotic/image/upload/v1560756961/icons_sheet.png',
+    battle_background: 'https://sig.grumpybumpers.com/host/Dragotic.gif',
+    digivice_sheet: 'https://res.cloudinary.com/dragotic/image/upload/v1560757847/digivice_sheet.png',
 };
 
-// FILTER DIGIMONS
-for (const digimon in DigiDex) {
-    const currDigi = DigiDex[digimon];
-    const digiName = DigiSets[currDigi.species].name;
-    const hasName = digiName ? true : false;
-    const newObj = {
-        id: digimon,
-        species: getSpecies(currDigi.species),
-    };
-    if (hasName) {
-        newObj.name = digiName;
-        newObj.specialName = DigiSets[currDigi.species].species;
+Object.keys(digimonShowdown.types).forEach(type => {
+    type = type.toLowerCase();
+
+    graphicResources.move_panels[type] = `https://res.cloudinary.com/dragotic/image/upload/v1560756606/move_panels/${type}_panel.png`;
+    graphicResources.battle_type_images[type] = `https://res.cloudinary.com/dragotic/image/upload/v1560757457/battle_type_images/${type}.png`; 
+});
+
+// MOVE CATEGORIES ABBREVIATED
+const moveCatAbbr = {
+    'Status': 'STA',
+    'Physical': 'PHY',
+    'Special': 'SPA',
+};
+
+// FORCE INSTALL
+const reqModule = async () => {
+    try {
+        require.resolve('clean-css')
+    } catch (e) {
+        console.log('Could not find "clean-css." Installing "clean-css"...');
+        execSync('npm install');
+        await setImmediate(() => {})
+        console.log('"clean-css" has been installed.\n');
     }
 
-    newDigiDex[digimon] = newObj;
-}
+    try {
+        return require('clean-css')
+    } catch (e) {
+        console.log('Couldn\'t import "clean-css." Type in `node index.js` in the cmd to generate the stylesheets.')
+        process.exit(1)
+    }
+};
 
-// TYPES
-const origTypes = require('./data/orig-typechart').BattleTypeChart;
-const DigiTypes = require('./data/typechart').BattleTypeChart;
-const newTypeChart = {};
+// BASE STYLESHEETS
+const stylesPath = join(__dirname, '/styles');
+const baseSheet = readFileSync(`${stylesPath}/base-sheet.css`, {
+    encoding: 'utf-8',
+});
+const battleSheet = readFileSync(`${stylesPath}/battle-sheet.css`, {
+    encoding: 'utf-8',
+});
+const moveSheet = readFileSync(`${stylesPath}/move-sheet.css`, {
+    encoding: 'utf-8',
+});
+const typeSheet = readFileSync(`${stylesPath}/type-sheet.css`, {
+    encoding: 'utf-8',
+});
 
-// FILTER TYPES
-for (const type in DigiTypes) {
-    const digiType = !origTypes[type] && DigiTypes[type];
-    if (!digiType) continue;
+const main = async () => {
+    const cleanCSS = await reqModule();
 
-    newTypeChart[type] = true;
-}
+    let CSS = baseSheet;
 
-// WRITE MOVES
-fs.writeFileSync('./moves.json', JSON.stringify(newMoveDex, null, 4), 'utf8');
-console.log('Digimon Moves has been written to moves.json');
+    CSS = CSS.replace('%battle_background', graphicResources.battle_background);
+    CSS = CSS.replace('%digivice_sheet', graphicResources.digivice_sheet);
 
-// WRITE DIGIDEX
-fs.writeFileSync('./digimons.json', JSON.stringify(newDigiDex, null, 4), 'utf8');
-console.log('Digimons have been written to digimons.json');
+    Object.values(digimonShowdown.dex).forEach(digimonData => {
+        let digimonName = digimonData.hasFormes ? `${digimonData.name} (${digimonData.species})` : digimonData.species;
+        let digimonPosition = digimonShowdown.positions[digimonData.id];
 
-// WRITE TYPECHART
-fs.writeFileSync('./typechart.json', JSON.stringify(newTypeChart, null, 4), 'utf8');
-console.log('Digimon Types have been written to typechart.json');
+        let currDigimonSheet = battleSheet;
+
+        currDigimonSheet = currDigimonSheet.replace('%species', digimonData.species);
+        currDigimonSheet = currDigimonSheet.replace(/%id/g, digimonData.id);
+        currDigimonSheet = currDigimonSheet.replace('%name', digimonName);
+        currDigimonSheet = currDigimonSheet.replace('%nameORspecies', digimonData.hasFormes ? digimonData.name : digimonData.species);
+        currDigimonSheet = currDigimonSheet.replace('%icon_sheet', graphicResources.icon_sheet);
+        currDigimonSheet = currDigimonSheet.replace('%x', digimonPosition.x).replace('%y', digimonPosition.y);
+
+        CSS += `${currDigimonSheet}\n`;
+    });
+
+    Object.values(digimonShowdown.moves).forEach((moveData, i) => {
+        let currMoveSheet = moveSheet;
+
+        currMoveSheet = currMoveSheet.replace('%startComment', i === 0 ? '/** DIGIMON MOVES CSS **/\n' : '');
+        currMoveSheet = currMoveSheet.replace(/%moveName/g, moveData.name);
+        currMoveSheet = currMoveSheet.replace('%move_panel', graphicResources.move_panels[moveData.type.toLowerCase()]);
+        currMoveSheet = currMoveSheet.replace('%moveCat', moveCatAbbr[moveData.category]);
+        currMoveSheet = currMoveSheet.replace('%movePower', moveData.basePower);
+        currMoveSheet = currMoveSheet.replace('%moveAcc', moveData.accuracy);
+        currMoveSheet = currMoveSheet.replace('%moveDesc', moveData.desc);
+
+        let moveSheetSplit = currMoveSheet.split(':::');
+        if (moveData.pokemonMove) {
+            currMoveSheet = (moveSheetSplit[0] + moveSheetSplit[2]).replace('\r\n\r\n', '\n');
+        } else {
+            currMoveSheet = moveSheetSplit.join('');
+        }
+
+        CSS += `${currMoveSheet}`;
+    });
+
+    Object.keys(digimonShowdown.types).forEach((type, i) => {
+        let currTypeSheet = typeSheet;
+
+        currTypeSheet = currTypeSheet.replace('%startComment', i === 0 ? '\n/** DIGIMON TYPES CSS **/\n' : '');
+        currTypeSheet = currTypeSheet.replace(/%type/g, type);
+        currTypeSheet = currTypeSheet.replace('%battle_type_image', graphicResources.battle_type_images[type.toLowerCase()]);
+
+        CSS += `${currTypeSheet}`;
+    });
+
+    // Write CSS
+    writeFileSync(join(__dirname, '/ds-css/digimon.css'), CSS);
+    console.log('Successfully wrote Digimon-Showdown-CSS!');
+
+    // Write Minified CSS
+    const CSSmin = new cleanCSS().minify(CSS).styles;
+
+    writeFileSync(join(__dirname, '/ds-css/digimon-min.css'), CSSmin);
+    console.log('Minified Digimon-Showdown-CSS generated!');
+};
+
+main();

@@ -4487,57 +4487,74 @@ const BattleMovedex = {
 			spd: 1,
 		},
 	},
-	"saintshield": {
-		name: "Saint Shield",
-		id: "saintshield",
-		basePower: 0,
-		priority: 4,
-		pp: 10,
-		category: "Status",
-		type: "Holy",
-		target: "allySide",
-		desc: "Priority +4. Protects user’s and allies this turn.",
-		shortDesc: "Protects user’s and allies this turn.",
-		flags: {snatch: 1},
-		accuracy: 100,
-		secondary: null,
-		stallingMove: true,
-		sideCondition: 'saintshield',
-		onPrepareHit(pokemon, source, move) {
-			this.attrLastMove('[still]');
-			this.add('-anim', source, "moonlight", source);
-			this.add('-anim', source, "protect", source);
-			return !!this.willAct() && this.runEvent('StallMove', pokemon);
-		},
-		onHitSide(side, source) {
-			side.addSideCondition('sidestall');
-			this.add('-message', source.name + ' has protected their side with a Saint Shield!');
-		},
-		effect: {
-			duration: 1,
-			//this is a side condition
-			onStart(target, source) {
-				this.add('-singleturn', source, 'Saint Shield');
-			},
-			onTryHitPriority: 4,
-			onTryHit(target, source, move) {
-				if (!move.flags['protect']) {
-					if (move.isZ) move.zBrokeProtect = true;
-					return;
-				}
-				this.add('-activate', target, 'move: Saint Shield');
-				source.moveThisTurnResult = true;
-				let lockedmove = source.getVolatile('lockedmove');
-				if (lockedmove) {
-					// Outrage counter is reset
-					if (source.volatiles['lockedmove'].duration === 2) {
-						delete source.volatiles['lockedmove'];
-					}
-				}
-				return null;
-			},
-		},
-	},
+	"holyterrain": {
+        accuracy: true,
+        basePower: 0,
+        category: "Status",
+        desc: "5 turns. Can't volatile status, +1/16 max HP. Holy moves bypass acc check.",
+        shortDesc: "5 turns. Can't volatile status, +1/16 max HP. Holy moves bypass acc check.",
+        id: "holyterrain",
+        name: "Holy Terrain",
+        pp: 10,
+        priority: 0,
+        flags: { nonsky: 1 },
+        terrain: 'holyterrain',
+        effect: {
+            duration: 5,
+            durationCallback: function (source, effect) {
+                if (source && source.hasItem('terrainextender')) {
+                    return 8;
+                }
+                return 5;
+            },
+            onSetStatus: function (status, target, source, effect) {
+                if (!target.isGrounded() || target.isSemiInvulnerable()) return;
+                if (effect && effect.status) {
+                    this.add('-activate', target, 'move: Holy Terrain');
+                }
+                return false;
+            },
+            onTryAddVolatile: function (status, target, source, effect) {
+                if (!target.isGrounded() || target.isSemiInvulnerable()) return;
+                if (status.id === 'confusion') {
+                    if (effect.effectType === 'Move' && !effect.secondaries) this.add('-activate', target, 'move: Holy Terrain');
+                    return null;
+                }
+            },
+            onAccuracy(accuracy, target, source, move) {
+                if (move.type === 'Holy' && source.isGrounded()) return true;
+ 
+                return accuracy;
+            },
+            onStart: function (battle, source, effect) {
+                if (effect && effect.effectType === 'Ability') {
+                    this.add('-fieldstart', 'move: Holy Terrain', '[from] ability: ' + effect, '[of] ' + source);
+                } else {
+                    this.add('-fieldstart', 'move: Holy Terrain');
+                }
+            },
+            onResidualOrder: 5,
+            onResidualSubOrder: 2,
+            onResidual: function () {
+                this.eachEvent('Terrain');
+            },
+            onTerrain: function (pokemon) {
+                if (pokemon.isGrounded() && !pokemon.isSemiInvulnerable()) {
+                    this.debug('Pokemon is grounded, healing through Holy Terrain.');
+                    this.heal(pokemon.maxhp / 16, pokemon, pokemon);
+                }
+            },
+            onEnd: function () {
+                this.eachEvent('Terrain');
+                this.add('-fieldend', 'move: Holy Terrain');
+            },
+        },
+        secondary: false,
+        target: "all",
+        type: "Holy",
+        zMoveBoost: { def: 1 },
+        contestType: "Beautiful",
+    },
 	"holyflash": {
 		name: "Holy Flash",
 		id: "holyflash",
