@@ -91,20 +91,30 @@ const main = async () => {
 
         let currDigimonSheet = battleSheet;
 
-        currDigimonSheet = currDigimonSheet.replace('%species', digimonData.species);
+        currDigimonSheet = currDigimonSheet.replace(/%species/g, digimonData.species);
         currDigimonSheet = currDigimonSheet.replace(/%id/g, digimonData.id);
         currDigimonSheet = currDigimonSheet.replace('%name', digimonName);
+        currDigimonSheet = currDigimonSheet.replace('%lowercaseSpecies', digimonData.species.toLowerCase());
         currDigimonSheet = currDigimonSheet.replace('%nameORspecies', digimonData.hasFormes ? digimonData.name : digimonData.species);
         currDigimonSheet = currDigimonSheet.replace('%icon_sheet', graphicResources.icon_sheet);
         currDigimonSheet = currDigimonSheet.replace('%x', digimonPosition.x).replace('%y', digimonPosition.y);
 
-        CSS += `${currDigimonSheet}\n`;
+        if (digimonData.hasFormes) currDigimonSheet = currDigimonSheet.replace('%specialCaseName', `${digimonData.name} (${digimonData.species.toLowerCase()})`);
+
+        let digimonSheetSplit = currDigimonSheet.split(':::');
+        if (!digimonData.hasFormes) {
+            currDigimonSheet = (digimonSheetSplit[0] + digimonSheetSplit[2]);
+        } else {
+            currDigimonSheet = digimonSheetSplit.join('');
+        }
+
+        CSS += `${currDigimonSheet}`;
     });
 
     Object.values(digimonShowdown.moves).forEach((moveData, i) => {
         let currMoveSheet = moveSheet;
 
-        currMoveSheet = currMoveSheet.replace('%startComment', i === 0 ? '/** DIGIMON MOVES CSS **/\n' : '');
+        currMoveSheet = currMoveSheet.replace('%startComment', i === 0 ? '/** DIGIMON MOVES CSS **/' : '');
         currMoveSheet = currMoveSheet.replace(/%moveName/g, moveData.name);
         currMoveSheet = currMoveSheet.replace('%move_panel', graphicResources.move_panels[moveData.type.toLowerCase()]);
         currMoveSheet = currMoveSheet.replace('%moveCat', moveCatAbbr[moveData.category]);
@@ -114,7 +124,7 @@ const main = async () => {
 
         let moveSheetSplit = currMoveSheet.split(':::');
         if (moveData.pokemonMove) {
-            currMoveSheet = (moveSheetSplit[0] + moveSheetSplit[2]).replace('\r\n\r\n', '\n');
+            currMoveSheet = (moveSheetSplit[0] + moveSheetSplit[2]);
         } else {
             currMoveSheet = moveSheetSplit.join('');
         }
@@ -125,7 +135,7 @@ const main = async () => {
     Object.keys(digimonShowdown.types).forEach((type, i) => {
         let currTypeSheet = typeSheet;
 
-        currTypeSheet = currTypeSheet.replace('%startComment', i === 0 ? '\n/** DIGIMON TYPES CSS **/\n' : '');
+        currTypeSheet = currTypeSheet.replace('%startComment', i === 0 ? '/** DIGIMON TYPES CSS **/' : '');
         currTypeSheet = currTypeSheet.replace(/%type/g, type);
         currTypeSheet = currTypeSheet.replace('%battle_type_image', graphicResources.battle_type_images[type.toLowerCase()]);
 
@@ -133,7 +143,12 @@ const main = async () => {
     });
 
     // Write CSS
-    writeFileSync(join(__dirname, '/ds-css/digimon.css'), CSS);
+    const CSSfull = new cleanCSS({
+        level: 0,
+        format: 'beautify'
+    }).minify(CSS).styles;
+
+    writeFileSync(join(__dirname, '/ds-css/digimon.css'), CSSfull);
     console.log('Successfully wrote Digimon-Showdown-CSS!');
 
     // Write Minified CSS

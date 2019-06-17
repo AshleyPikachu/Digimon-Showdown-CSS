@@ -8,7 +8,12 @@
     content: url('https://play.pokemonshowdown.com/sprites/digimon/sprites/digimonani-back/%id.gif');
 }
 
+:::
+.innerbattle .picon[aria-label^="%specialCaseName"],
+.innerbattle .picon[aria-label^="%species"],
+:::
 .innerbattle .picon[aria-label^="%name"],
+.innerbattle .picon[aria-label^="%lowercaseSpecies"],
 button[value^="%nameORspecies"] .picon {
     background: url('%icon_sheet') no-repeat scroll %xpx %ypx !important;
 }
