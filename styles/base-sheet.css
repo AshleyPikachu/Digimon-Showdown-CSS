@@ -80,9 +80,3 @@ div[id*="digimon"] .innerbattle div > img[style*="left: 223px; top: 188px;"] {
     top: 225px !important;
 }
 
-/** DIGIMONS' SPRITES & ICONS CSS **/
-
-div[id*="digimon"] .innerbattle div > div > img {
-    width: 56px !important;
-    height: 56px !important;
-}

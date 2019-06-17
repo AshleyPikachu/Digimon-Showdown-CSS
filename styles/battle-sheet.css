@@ -1,11 +1,16 @@
+%startComment
 /** %species CSS **/
 
 .innerbattle div > div > img[src*="bw/%id"] {
     content: url('https://play.pokemonshowdown.com/sprites/digimon/sprites/digimonani/%id.gif');
+    width: 56px !important;
+    height: 56px !important;
 }
 
 .innerbattle div > div > img[src*="bw-back/%id"] {
     content: url('https://play.pokemonshowdown.com/sprites/digimon/sprites/digimonani-back/%id.gif');
+    width: 56px !important;
+    height: 56px !important;
 }
 
 :::

@@ -85,12 +85,13 @@ const main = async () => {
     CSS = CSS.replace('%battle_background', graphicResources.battle_background);
     CSS = CSS.replace('%digivice_sheet', graphicResources.digivice_sheet);
 
-    Object.values(digimonShowdown.dex).forEach(digimonData => {
+    Object.values(digimonShowdown.dex).forEach((digimonData, i) => {
         let digimonName = digimonData.hasFormes ? `${digimonData.name} (${digimonData.species})` : digimonData.species;
         let digimonPosition = digimonShowdown.positions[digimonData.id];
 
         let currDigimonSheet = battleSheet;
 
+        currDigimonSheet = currDigimonSheet.replace('%startComment', i === 0 ? '/** DIGIMONS SPRITES & ICONS CSS **/' : '');
         currDigimonSheet = currDigimonSheet.replace(/%species/g, digimonData.species);
         currDigimonSheet = currDigimonSheet.replace(/%id/g, digimonData.id);
         currDigimonSheet = currDigimonSheet.replace('%name', digimonName);
