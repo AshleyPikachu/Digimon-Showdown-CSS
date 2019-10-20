@@ -1,1191 +1,1019 @@
-'use strict';
-
-const sets = {
-	//Fresh//
-	"Botamon": {
-		species: "Botamon",
-		ability: "Data",
-		moves: ['acidbubble'],
-	},
-	"Dodomon": {
-		species: "Dodomon",
-		ability: "Data",
-		moves: ['acidbubble'],
-	},
-	"Kuramon": {
-		species: "Kuramon",
-		ability: "Virus",
-		moves: ['acidbubble'],
-	},
-	"Poyomon": {
-		species: "Poyomon",
-		ability: "Data",
-		moves: ['acidbubble'],
-	},
-	"Punimon": {
-		species: "Punimon",
-		ability: "Data",
-		moves: ['acidbubble'],
-	},
-	"Yuramon": {
-		species: "Yuramon",
-		ability: "Data",
-		moves: ['acidbubble'],
-	},
-	//In-Traning//
-	"Bukamon": {
-		species: "Bukamon",
-		ability: "Data",
-		moves: ['acidbubble'],
-	},
-	"Dorimon": {
-		species: "Dorimon",
-		ability: "Data",
-		moves: ['acidbubble'],
-	},
-	"Koromon": {
-		species: "Koromon",
-		ability: "Data",
-		moves: ['acidbubble'],
-	},
-	"Motimon": {
-		species: "Motimon",
-		ability: "Data",
-		moves: ['acidbubble'],
-	},
-	"Nyaromon": {
-		species: "Nyaromon",
-		ability: "Vaccine",
-		moves: ['acidbubble'],
-	},
-	"Tanemon": {
-		species: "Tanemon",
-		ability: "Data",
-		moves: ['acidbubble'],
-	},
-	"Tokomon": {
-		species: "Tokomon",
-		ability: "Data",
-		moves: ['acidbubble'],
-	},
-	"Tsumemon": {
-		species: "Tsumemon",
-		ability: "Virus",
-		moves: ['acidbubble'],
-	},
-	"Tsunomon": {
-		species: "Tsunomon",
-		ability: "Data",
-		moves: ['acidbubble'],
-	},
-	//Rookies//
-	"Agumon": {
-		species: "Agumon",
-		ability: "Vaccine",
-		moves: ['burningheart', 'heatbreath', 'firetower', 'infinityburn', 'musclecharge', 'sonicjab', 'windcutter'],
-		baseSignatureMove: "pepperbreath",
-		signatureMove: "Pepper Breath",
-	},
-	"Aruraumon": {
-		species: "Aruraumon",
-		ability: "Virus",
-		moves: ['charmperfume', 'rootbind', 'venomdisaster', 'waterblitz', 'superstinkyjet', 'shadowfall', 'blackout'],
-		baseSignatureMove: "nemesisivy",
-		signatureMove: "Nemesis Ivy",
-	},
-	"Betamon": {
-		species: "Betamon",
-		ability: "Virus",
-		moves: ['staticelectricity', 'electriccloud', 'megalospark', 'hailspear', 'waterblitz', 'oceanwave'],
-		baseSignatureMove: "electricshock",
-		signatureMove: "Electric Shock",
-	},
-	"Biyomon": {
-		species: "Biyomon",
-		ability: "Vaccine",
-		moves: ['wingshoes', 'windcutter', 'burningheart', 'heatbreath', 'firetower', 'meltdown', 'warcry', 'holyflash', 'rootbind'],
-		baseSignatureMove: "spiraltwister",
-		signatureMove: "Spiral Twister",
-	},
-	"ClearAgumon": {
-		species: "ClearAgumon",
-		ability: "Vaccine",
-		moves: ['heatbreath', 'saintshield', 'saintray', 'holyflash', 'mechanicalclaw', 'upgrade', 'gigawattlaser'],
-		baseSignatureMove: "preciousflame",
-		signatureMove: "Precious Flame",
-	},
-	"DemiDevimon": {
-		species: "DemiDevimon",
-		ability: "Virus",
-		moves: ['blackout', 'evilfantasy', 'shadowfall', 'hideandseek', 'windcutter', 'confusedstorm', 'cootieskick'],
-		baseSignatureMove: "demidart",
-		signatureMove: "Demi Dart",
-	},
-	"Dokunemon": {
-		species: "Dokunemon",
-		ability: "Virus",
-		moves: ['staticelectricity', 'shadowfall', 'earthcoat', 'massmorph', 'bug', 'venomdisaster', 'blackout'],
-		baseSignatureMove: "wormvenom",
-		signatureMove: "Worm Venom",
-	},
-	"Dorumon": {
-		species: "Dorumon",
-		ability: "Data",
-		moves: ['burningheart', 'megalospark', 'musclecharge', 'sonicjab', 'fightingaura', 'busterdrive', 'mechanicalclaw', 'antiattackfield'],
-		baseSignatureMove: "metalcannon",
-		signatureMove: "Metal Cannon",
-	},
-	"Elecmon": {
-		species: "Elecmon",
-		ability: "Data",
-		moves: ['staticelectricity', 'electriccloud', 'megalospark', 'thunderjustice', 'saintheal', 'warcry', 'fightingaura'],
-		baseSignatureMove: "superthunderstrike",
-		signatureMove: "Super Thunder Strike",
-	},
-	"Gabumon": {
-		species: "Gabumon",
-		ability: "Data",
-		moves: ['heatbreath', 'firetower', 'hailspear', 'winterblast', 'gigafreeze', 'icestatue', 'musclecharge', 'sonicjab'],
-		baseSignatureMove: "blueblaster",
-		signatureMove: "Blue Blaster",
-	},
-	"Goburimon": {
-		species: "Goburimon",
-		ability: "Virus",
-		moves: ['heatbreath', 'firetower', 'infinityburn', 'musclecharge', 'burningheart', 'reboundstrike', 'megatonpunch', 'shadowfall', 'pooptoss'],
-		baseSignatureMove: "goblinstrike",
-		signatureMove: "Goblin Strike",
-	},
-	"Gomamon": {
-		species: "Gomamon",
-		ability: "Vaccine",
-		moves: ['mechanicalclaw', 'waterblitz', 'oceanwave', 'icestatue', 'aurorafreeze', 'warcry', 'reboundstrike'],
-		baseSignatureMove: "marchingfishes",
-		signatureMove: "Marching Fishes",
-	},
-	"Gotsumon": {
-		species: "Gotsumon",
-		ability: "Data",
-		moves: ['earthcoat', 'rockfall', 'charmperfume', 'venomdisaster', 'bug', 'megatonpunch', 'fightingaura'],
-		baseSignatureMove: "rockfist",
-		signatureMove: "Rock Fist",
-	},
-	"Kunemon": {
-		species: "Kunemon",
-		ability: "Virus",
-		moves: ['staticelectricity', 'megalospark', 'earthcoat', 'massmorph', 'bug', 'venomdisaster', 'superstinkyjet'],
-		baseSignatureMove: "electricthread",
-		signatureMove: "Electric Thread",
-	},
-	"ModokiBetamon": {
-		species: "ModokiBetamon",
-		ability: "Vaccine",
-		moves: ['staticelectricity', 'electriccloud', 'confusedstorm', 'hailspear', 'icestatue', 'rootbind', 'waterblitz'],
-		baseSignatureMove: "aquatower",
-		signatureMove: "Aqua Tower",
-	},
-	"Muchomon": {
-		species: "Muchomon",
-		ability: "Data",
-		moves: ['burningheart', 'hailspear', 'waterblitz', 'icestatue', 'windcutter', 'infinityburn', 'firewall'],
-		baseSignatureMove: "tropicalbeak",
-		signatureMove: "Tropical Beak",
-	},
-	"Otamamon": {
-		species: "Otamamon",
-		ability: "Data",
-		moves: ['hailspear', 'waterblitz', 'oceanwave', 'icestatue', 'bug', 'charmperfume', 'warcry'],
-		baseSignatureMove: "lullabybubble",
-		signatureMove: "Lullaby Bubble",
-	},
-	"Palmon": {
-		species: "Palmon",
-		ability: "Vaccine",
-		moves: ['charmperfume', 'rootbind', 'venomdisaster', 'waterblitz', 'superstinkyjet', 'burningheart', 'confusedstorm'],
-		baseSignatureMove: "poisonivy",
-		signatureMove: "Poison Ivy",
-	},
-	"Patamon": {
-		species: "Patamon",
-		ability: "Data",
-		moves: ['wingshoes', 'windcutter', 'sonicjab', 'busterdrive', 'saintheal', 'holybreath', 'holyflash'],
-		baseSignatureMove: "boombubble",
-		signatureMove: "Boom Bubble",
-	},
-	"Penguinmon": {
-		species: "Penguinmon",
-		ability: "Data",
-		moves: ['musclecharge', 'hailspear', 'waterblitz', 'icestatue', 'windcutter', 'megalospark', 'earthcoat'],
-		baseSignatureMove: "eternalslapping",
-		signatureMove: "Eternal Slapping",
-	},
-	"Psychemon": {
-		species: "Psychemon",
-		ability: "Vaccine",
-		moves: ['heatbreath', 'firetower', 'staticelectricity', 'winterblast', 'confusedstorm', 'icestatue', 'musclecharge', 'sonicjab'],
-		baseSignatureMove: "coloredsparkle",
-		signatureMove: "Colored Sparkle",
-	},
-	"Salamon": {
-		species: "Salamon",
-		ability: "Vaccine",
-		moves: ['saintheal', 'holybreath', 'holyflash', 'saintray', 'warcry', 'antiattackfield', 'fightingaura'],
-		baseSignatureMove: "puppyhowl",
-		signatureMove: "Puppy Howl",
-	},
-	"Shamanmon": {
-		species: "Shamanmon",
-		ability: "Virus",
-		moves: ['charmperfume', 'rootbind', 'rockfall', 'musclecharge', 'warcry', 'reboundstrike', 'megatonpunch', 'shadowfall', 'pooptoss'],
-		baseSignatureMove: "dancingbone",
-		signatureMove: "Dancing Bone",
-	},
-	"SnowAgumon": {
-		species: "SnowAgumon",
-		ability: "Vaccine",
-		moves: ['burningheart', 'hailspear', 'winterblast', 'icestatue', 'musclecharge', 'sonicjab', 'windcutter'],
-		baseSignatureMove: "littleblizzard",
-		signatureMove: "Little Blizzard",
-	},
-	"SnowGoburimon": {
-		species: "SnowGoburimon",
-		ability: "Virus",
-		moves: ['hailspear', 'winterblast', 'icestatue', 'musclecharge', 'warcry', 'reboundstrike', 'megatonpunch', 'shadowfall', 'pooptoss'],
-		baseSignatureMove: "snowgobbolt",
-		signatureMove: "SnowGob Bolt",
-	},
-	"Tentomon": {
-		species: "Tentomon",
-		ability: "Data",
-		moves: ['staticelectricity', 'confusedstorm', 'electriccloud', 'megalospark', 'massmorph', 'bug', 'rockfall', 'fightingaura'],
-		baseSignatureMove: "supershocker",
-		signatureMove: "Super Shocker",
-	},
-	"ToyAgumon": {
-		species: "ToyAgumon",
-		ability: "Data",
-		moves: ['heatbreath', 'firewall', 'prominencebeam', 'sonicjab', 'mechanicalclaw', 'upgrade', 'gigawattlaser'],
-		baseSignatureMove: "plasticblaze",
-		signatureMove: "Plastic Blaze",
-	},
-	"Tsukaimon": {
-		species: "Tsukaimon",
-		ability: "Virus",
-		moves: ['wingshoes', 'windcutter', 'sonicjab', 'darkspirit', 'blackout', 'evilfantasy', 'chaoscloud'],
-		baseSignatureMove: "evilspell",
-		signatureMove: "Evil Spell",
-	},
-	//Champions//
-	"Airdramon": {
-		species: "Airdramon",
-		ability: "Vaccine",
-		moves: ['heatbreath', 'firetower', 'meltdown', 'infinityburn', 'wingshoes', 'windcutter', 'confusedstorm', 'holybreath'],
-		baseSignatureMove: "spinningneedle",
-		signatureMove: "Spinning Needle",
-	},
-	"Akatorimon": {
-		species: "Akatorimon",
-		ability: "Data",
-		moves: ['heatbreath', 'firewall', 'wingshoes', 'windcutter', 'megalospark', 'icestatue', 'guerrillapoop'],
-		baseSignatureMove: "scarredeye",
-		signatureMove: "Scar-Red Eye",
-	},
-	"Angemon": {
-		species: "Angemon",
-		ability: "Vaccine",
-		moves: ['wingshoes', 'windcutter', 'sonicjab', 'busterdrive', 'saintheal', 'holybreath', 'holyflash', 'saintray', 'holyjudgment'],
-		baseSignatureMove: "handoffate",
-		signatureMove: "Hand of Fate",
-	},
-	"Bakemon": {
-		species: "Bakemon",
-		ability: "Virus",
-		moves: ['darkspirit', 'blackout', 'evilfantasy', 'shadowfall', 'massmorph', 'icestatue', 'staticelectricity', 'electriccloud', 'thunderjustice'],
-		baseSignatureMove: "evilcharm",
-		signatureMove: "Evil Charm",
-	},
-	"Birdramon": {
-		species: "Birdramon",
-		ability: "Vaccine",
-		moves: ['wingshoes', 'windcutter', 'burningheart', 'heatbreath', 'firetower', 'meltdown', 'infinityburn', 'warcry', 'holyflash'],
-		baseSignatureMove: "meteorwing",
-		signatureMove: "Meteor Wing",
-	},
-	"BlackGatomon": {
-		species: "BlackGatomon",
-		ability: "Virus",
-		moves: ['warcry', 'sonicjab', 'fightingaura', 'evilsquall', 'evilfantasy', 'hideandseek', 'gigafreeze'],
-		baseSignatureMove: "darkpaw",
-		signatureMove: "Dark Paw",
-	},
-	"Centarumon": {
-		species: "Centarumon",
-		ability: "Data",
-		moves: ['firetower', 'firewall', 'prominencebeam', 'saintheal', 'saintray', 'fightingaura', 'upgrade', 'gigawattlaser'],
-		baseSignatureMove: "solarray",
-		signatureMove: "Solar Ray",
-	},
-	"Coelamon": {
-		species: "Coelamon",
-		ability: "Data",
-		moves: ['waterblitz', 'icestatue', 'mechanicalclaw', 'upgrade', 'antiattackfield', 'massmorph', 'staticelectricity', 'deleteprogram'],
-		baseSignatureMove: "variabledarts",
-		signatureMove: "Variable Darts",
-	},
-	"Darkrizamon": {
-		species: "Darkrizamon",
-		ability: "Virus",
-		moves: ['heatbreath', 'firetower', 'firewall', 'meltdown', 'darkspirit', 'evilfantasy', 'shadowfall', 'mechanicalclaw'],
-		baseSignatureMove: "dreadfire",
-		signatureMove: "Dread Fire",
-	},
-	"Devimon": {
-		species: "Devimon",
-		ability: "Virus",
-		moves: ['darkspirit', 'windcutter', 'evilfantasy', 'chaoscloud', 'aurorafreeze', 'evilsquall', 'confusedstorm', 'wingshoes'],
-		baseSignatureMove: "deathhand",
-		signatureMove: "Death Hand",
-	},
-	"Dolphmon": {
-		species: "Dolphmon",
-		ability: "Vaccine",
-		moves: ['waterblitz', 'gigafreeze', 'oceanwave', 'icestatue', 'warcry', 'sonicjab', 'fightingaura', 'holybreath', 'saintheal'],
-		baseSignatureMove: "pulseblast",
-		signatureMove: "Pulse Blast",
-	},
-	"Dorugamon": {
-		species: "Dorugamon",
-		ability: "Data",
-		moves: ['burningheart', 'winterblast', 'megalospark', 'musclecharge', 'sonicjab', 'fightingaura', 'busterdrive', 'mechanicalclaw', 'antiattackfield'],
-		baseSignatureMove: "powermetal",
-		signatureMove: "Power Metal",
-	},
-	"Drimogemon": {
-		species: "Drimogemon",
-		ability: "Data",
-		moves: ['mechanicalclaw', 'deleteprogram', 'earthcoat', 'massmorph', 'rootbind', 'rockfall'],
-		baseSignatureMove: "drillspin",
-		signatureMove: "Drill Spin",
-	},
-	"Flarerizamon": {
-		species: "Flarerizamon",
-		ability: "Data",
-		moves: ['heatbreath', 'firetower', 'firewall', 'meltdown', 'sonicjab', 'warcry', 'megatonpunch', 'mechanicalclaw'],
-		baseSignatureMove: "blazebuster",
-		signatureMove: "Blaze Buster",
-	},
-	"Frigimon": {
-		species: "Frigimon",
-		ability: "Vaccine",
-		moves: ['hailspear', 'icestatue', 'aurorafreeze', 'waterblitz', 'sonicjab', 'musclecharge', 'fightingaura'],
-		baseSignatureMove: "subzeroicepunch",
-		signatureMove: "Sub Zero Ice Punch",
-	},
-	"Fugamon": {
-		species: "Fugamon",
-		ability: "Virus",
-		moves: ['staticelectricity', 'windcutter', 'megalospark', 'blackout', 'musclecharge', 'warcry', 'reboundstrike', 'megatonpunch'],
-		baseSignatureMove: "evilhurricane",
-		signatureMove: "Evil Hurricane",
-	},
-	"Garurumon": {
-		species: "Garurumon",
-		ability: "Data",
-		moves: ['warcry', 'waterblitz', 'fightingaura', 'burningheart', 'heatbreath', 'gigafreeze', 'hailspear', 'meltdown', 'aurorafreeze'],
-		baseSignatureMove: "howlingblaster",
-		signatureMove: "Howling Blaster",
-	},
-	"Gatomon": {
-		species: "Gatomon",
-		ability: "Vaccine",
-		moves: ['holybreath', 'sonicjab', 'fightingaura', 'saintray', 'saintheal', 'holyflash', 'confusedstorm'],
-		baseSignatureMove: "lightningpaw",
-		signatureMove: "Lightning Paw",
-	},
-	"Gekomon": {
-		species: "Gekomon",
-		ability: "Data",
-		moves: ['hailspear', 'confusedstorm', 'oceanwave', 'icestatue', 'gigafreeze', 'warcry', 'charmperfume'],
-		baseSignatureMove: "symphonycrusher",
-		signatureMove: "Symphony Crusher",
-	},
-	"Geremon": {
-		species: "Geremon",
-		ability: "Virus",
-		moves: ['gigafreeze', 'earthcoat', 'bug', 'venomdisaster', 'warcry', 'superstinkyjet', 'poopattackfield', 'guerrillapoop', 'extremepoopdeath'],
-		baseSignatureMove: "hypersmell",
-		signatureMove: "Hyper Smell",
-	},
-	"Greymon": {
-		species: "Greymon",
-		ability: "Vaccine",
-		moves: ['burningheart', 'heatbreath', 'firetower', 'infinityburn', 'musclecharge', 'sonicjab', 'megalospark'],
-		baseSignatureMove: "megaflame",
-		signatureMove: "Mega Flame",
-	},
-	"Guardromon": {
-		species: "Guardromon",
-		ability: "Vaccine",
-		moves: ['upgrade', 'reverseprogram', 'antiattackfield', 'gigawattlaser', 'megalospark', 'saintshield', 'firetower', 'firewall', 'thunderjustice'],
-		baseSignatureMove: "guardianbarrage",
-		signatureMove: "Guardian Barrage",
-	},
-	"Gururumon": {
-		species: "Gururumon",
-		ability: "Vaccine",
-		moves: ['warcry', 'waterblitz', 'fightingaura', 'burningheart', 'blackout', 'gigafreeze', 'darkspirit', 'evilfantasy', 'aurorafreeze'],
-		baseSignatureMove: "chaosblaster",
-		signatureMove: "Chaos Blaster",
-	},
-	"Hyogamon": {
-		species: "Hyogamon",
-		ability: "Virus",
-		moves: ['hailspear', 'winterblast', 'icestatue', 'blackout', 'musclecharge', 'warcry', 'reboundstrike', 'megatonpunch'],
-		baseSignatureMove: "snowpunch",
-		signatureMove: "snowpunch",
-	},
-	"IceDevimon": {
-		species: "IceDevimon",
-		ability: "Virus",
-		moves: ['waterblitz', 'blackout', 'evilfantasy', 'icestatue', 'shadowfall', 'evilsquall', 'winterblast', 'gigafreeze'],
-		baseSignatureMove: "frozenclaw",
-		signatureMove: "Frozen Claw",
-	},
-	"Icemon": {
-		species: "Icemon",
-		ability: "Data",
-		moves: ['earthcoat', 'rockfall', 'hailspear', 'aurorafreeze', 'gigafreeze', 'megatonpunch', 'fightingaura'],
-		baseSignatureMove: "iceballbomb",
-		signatureMove: "Iceball Bomb",
-	},
-	"Ikkakumon": {
-		species: "Ikkakumon",
-		ability: "Vaccine",
-		moves: ['hailspear', 'oceanwave', 'icestatue', 'aurorafreeze', 'mechanicalclaw', 'warcry', 'reboundstrike'],
-		baseSignatureMove: "harpoontorpedo",
-		signatureMove: "Harpoon Torpedo",
-	},
-	"JungleMojyamon": {
-		species: "JungleMojyamon",
-		ability: "Vaccine",
-		moves: ['earthcoat', 'rootbind', 'warcry', 'musclecharge', 'sonicjab', 'fightingaura', 'superstinkyjet', 'poopfling'],
-		baseSignatureMove: "junglebone",
-		signatureMove: "Jungle Bone",
-	},
-	"Kabuterimon": {
-		species: "Kabuterimon",
-		ability: "Vaccine",
-		moves: ['confusedstorm', 'electriccloud', 'megalospark', 'thunderjustice', 'massmorph', 'bug', 'rockfall', 'fightingaura'],
-		baseSignatureMove: "electroshocker",
-		signatureMove: "Electro Shocker",
-	},
-	"Kokatorimon": {
-		species: "Kokatorimon",
-		ability: "Vaccine",
-		moves: ['wingshoes', 'windcutter', 'megalospark', 'icestatue', 'cootieskick', 'pooptoss', 'guerrillapoop'],
-		baseSignatureMove: "frozenfireshot",
-		signatureMove: "Frozen Fire Shot",
-	},
-	"Kuwagamon": {
-		species: "Kuwagamon",
-		ability: "Virus",
-		moves: ['sonicjab', 'busterdrive', 'massmorph', 'bug', 'venomdisaster', 'windcutter', 'blackout'],
-		baseSignatureMove: "scissorclaw",
-		signatureMove: "Scissor Claw",
-	},
-	"Leomon": {
-		species: "Leomon",
-		ability: "Vaccine",
-		moves: ['musclecharge', 'warcry', 'sonicjab', 'meltdown', 'infinityburn', 'megatonpunch', 'earthcoat', 'saintshield', 'burningheart'],
-		baseSignatureMove: "fistofthebeastking",
-		signatureMove: "Fist of the Beast King",
-	},
-	"Meicoomon": {
-		species: "Meicoomon",
-		ability: "Data",
-		moves: ['warcry', 'windcutter', 'fightingaura', 'megatonpunch', 'mechanicalclaw', 'venomdisaster', 'shadowfall', 'saintray'],
-		baseSignatureMove: "xscratch",
-		signatureMove: "X Scratch",
-	},
-	"Meramon": {
-		species: "Meramon",
-		ability: "Data",
-		moves: ['burningheart', 'firewall', 'firetower', 'infinityburn', 'holyflash', 'fightingaura', 'sonicjab', 'megatonpunch'],
-		baseSignatureMove: "burningfist",
-		signatureMove: "Burning Fist",
-	},
-	"Mikemon": {
-		species: "Mikemon",
-		ability: "Data",
-		moves: ['warcry', 'sonicjab', 'fightingaura', 'venomdisaster', 'evilfantasy', 'holyflash', 'bug'],
-		baseSignatureMove: "catclaw",
-		signatureMove: "Cat Claw",
-	},
-	"Mojyamon": {
-		species: "Mojyamon",
-		ability: "Vaccine",
-		moves: ['warcry', 'musclecharge', 'sonicjab', 'fightingaura', 'hailspear', 'winterblast', 'superstinkyjet', 'poopfling'],
-		baseSignatureMove: "boneboomerang",
-		signatureMove: "Bone Boomerang",
-	},
-	"Monochromon": {
-		species: "Monochromon",
-		ability: "Data",
-		moves: ['heatbreath', 'firetower', 'infinityburn', 'earthcoat', 'rockfall', 'musclecharge', 'busterdrive'],
-		baseSignatureMove: "volcanicstrike",
-		signatureMove: "Volcanic Strike",
-	},
-	"MoriShellmon": {
-		species: "MoriShellmon",
-		ability: "Data",
-		moves: ['waterblitz', 'oceanwave', 'earthcoat', 'charmperfume', 'rootbind', 'venomdisaster', 'sonicjab'],
-		baseSignatureMove: "mindfog",
-		signatureMove: "Mind Fog",
-	},
-	"MudFrigimon": {
-		species: "MudFrigimon",
-		ability: "Vaccine",
-		moves: ['rootbind', 'bug', 'rockfall', 'massmorph', 'sonicjab', 'earthcoat', 'fightingaura'],
-		baseSignatureMove: "mudball",
-		signatureMove: "Mud Ball",
-	},
-	"Nanimon": {
-		species: "Nanimon",
-		ability: "Virus",
-		moves: ['musclecharge', 'sonicjab', 'fightingaura', 'pooptoss', 'poopattackfield', 'superstinkyjet', 'evilfantasy', 'blackout'],
-		baseSignatureMove: "poopdunk",
-		signatureMove: "Poop Dunk",
-	},
-	"Ninjamon": {
-		species: "Ninjamon",
-		ability: "Data",
-		moves: ['warcry', 'sonicjab', 'musclecharge', 'charmperfume', 'rootbind', 'earthcoat', 'reboundstrike'],
-		baseSignatureMove: "dancingleaves",
-		signatureMove: "Dancing Leaves",
-	},
-	"NiseDrimogemon": {
-		species: "NiseDrimogemon",
-		ability: "Vaccine",
-		moves: ['warcry', 'sonicjab', 'busterdrive', 'reboundstrike', 'mechanicalclaw', 'upgrade', 'deleteprogram', 'reverseprogram'],
-		baseSignatureMove: "fakedrillspin",
-		signatureMove: "Fake Drill Spin",
-	},
-	"Numemon": {
-		species: "Numemon",
-		ability: "Virus",
-		moves: ['oceanwave', 'earthcoat', 'bug', 'icestatue', 'warcry', 'cootieskick', 'pooptoss', 'guerrillapoop', 'extremepoopdeath'],
-		baseSignatureMove: "numesludge",
-		signatureMove: "Nume-Sludge",
-	},
-	"Ogremon": {
-		species: "Ogremon",
-		ability: "Virus",
-		moves: ['firetower', 'infinityburn', 'heatbreath', 'blackout', 'musclecharge', 'warcry', 'reboundstrike', 'megatonpunch'],
-		baseSignatureMove: "pummelwhack",
-		signatureMove: "Pummel Whack",
-	},
-	"Piddomon": {
-		species: "Piddomon",
-		ability: "Vaccine",
-		moves: ['burningheart', 'firewall', 'infinityburn', 'holybreath', 'windcutter', 'sonicjab', 'saintheal', 'saintray', 'holyjudgment'],
-		baseSignatureMove: "firefeather",
-		signatureMove: "Fire Feather",
-	},
-	"PlatinumSukamon": {
-		species: "PlatinumSukamon",
-		ability: "Vaccine",
-		moves: ['earthcoat', 'rockfall', 'holyflash', 'mechanicalclaw', 'reverseprogram', 'deleteprogram', 'cootieskick', 'superstinkyjet', 'guerrillapoop', 'extremepoopdeath'],
-		baseSignatureMove: "raremetalpoop",
-		signatureMove: "Rare Metal Poop",
-	},
-	"RedVegiemon": {
-		species: "RedVegiemon",
-		ability: "Virus",
-		moves: ['heatbreath', 'meltdown', 'prominencebeam', 'massmorph', 'charmperfume', 'venomdisaster', 'earthcoat'],
-		baseSignatureMove: "chilipepperpummel",
-		signatureMove: "Chili Pepper Pummel",
-	},
-	"Rockmon": {
-		species: "Rockmon",
-		ability: "Virus",
-		moves: ['mechanicalclaw', 'winterblast', 'gigafreeze', 'gigawattlaser', 'dgdimension', 'upgrade', 'sonicjab'],
-		baseSignatureMove: "antidigibeam",
-		signatureMove: "Anti-Digi Beam",
-	},
-	"Saberdramon": {
-		species: "Saberdramon",
-		ability: "Virus",
-		moves: ['wingshoes', 'windcutter', 'burningheart', 'blackout', 'firetower', 'shadowfall', 'infinityburn', 'evilfantasy'],
-		baseSignatureMove: "nightroar",
-		signatureMove: "Night Roar",
-	},
-	"SandYanmamon": {
-		species: "SandYanmamon",
-		ability: "Virus",
-		moves: ['electriccloud', 'windcutter', 'confusedstorm', 'thunderjustice', 'earthcoat', 'massmorph', 'charmperfume', 'bug', 'holyflash'],
-		baseSignatureMove: "stunray",
-		signatureMove: "Stun Ray",
-	},
-	"Seadramon": {
-		species: "Seadramon",
-		ability: "Data",
-		moves: ['hailspear', 'waterblitz', 'gigafreeze', 'aurorafreeze', 'heatbreath', 'meltdown', 'holybreath'],
-		baseSignatureMove: "iceblast",
-		signatureMove: "Ice Blast",
-	},
-	"Shellmon": {
-		species: "Shellmon",
-		ability: "Data",
-		moves: ['waterblitz', 'winterblast', 'oceanwave', 'aurorafreeze', 'massmorph', 'rockfall', 'sonicjab'],
-		baseSignatureMove: "hydropressure",
-		signatureMove: "Hydro Pressure",
-	},
-	"ShimaUnimon": {
-		species: "ShimaUnimon",
-		ability: "Data",
-		moves: ['holybreath', 'electriccloud', 'confusedstorm', 'saintheal', 'holyflash', 'saintray', 'warcry', 'fightingaura', 'sonicjab', 'busterdrive'],
-		baseSignatureMove: "lustershot",
-		signatureMove: "Luster Shot",
-	},
-	"Soulmon": {
-		species: "Soulmon",
-		ability: "Virus",
-		moves: ['darkspirit', 'blackout', 'evilfantasy', 'shadowfall', 'massmorph', 'staticelectricity', 'electriccloud', 'aurorafreeze'],
-		baseSignatureMove: "necromagic",
-		signatureMove: "Necro Magic",
-	},
-	"Sukamon": {
-		species: "Sukamon",
-		ability: "Virus",
-		moves: ['earthcoat', 'bug', 'rockfall', 'warcry', 'cootieskick', 'superstinkyjet', 'guerrillapoop', 'extremepoopdeath', 'hideandseek'],
-		baseSignatureMove: "poop",
-		signatureMove: "Poop",
-	},
-	"Tankmon": {
-		species: "Tankmon",
-		ability: "Data",
-		moves: ['burningheart', 'heatbreath', 'infinityburn', 'prominencebeam', 'earthcoat', 'antiattackfield', 'gigawattlaser', 'deleteprogram', 'upgrade'],
-		baseSignatureMove: "hypercannon",
-		signatureMove: "Hyper Cannon",
-	},
-	"Togemon": {
-		species: "Togemon",
-		ability: "Data",
-		moves: ['massmorph', 'charmperfume', 'rootbind', 'venomdisaster', 'waterblitz', 'musclecharge', 'sonicjab', 'fightingaura', 'megatonpunch'],
-		baseSignatureMove: "needlespray",
-		signatureMove: "Needle Spray",
-	},
-	"Tyrannomon": {
-		species: "Tyrannomon",
-		ability: "Data",
-		moves: ['burningheart', 'heatbreath', 'firetower', 'prominencebeam', 'musclecharge', 'sonicjab', 'reboundstrike', 'rockfall'],
-		baseSignatureMove: "blazeblaster",
-		signatureMove: "Blaze Blaster",
-	},
-	"Unimon": {
-		species: "Unimon",
-		ability: "Vaccine",
-		moves: ['wingshoes', 'megalospark', 'thunderjustice', 'confusedstorm', 'rockfall', 'saintheal', 'holyjudgment', 'saintray', 'musclecharge'],
-		baseSignatureMove: "aerialattack",
-		signatureMove: "Aerial Attack",
-	},
-	"Vegiemon": {
-		species: "Vegiemon",
-		ability: "Virus",
-		moves: ['waterblitz', 'gigafreeze', 'oceanwave', 'massmorph', 'charmperfume', 'venomdisaster', 'earthcoat'],
-		baseSignatureMove: "sweetbreath",
-		signatureMove: "Sweet Breath",
-	},
-	"Weedmon": {
-		species: "Weedmon",
-		ability: "Virus",
-		moves: ['superstinkyjet', 'poopattackfield', 'extremepoopdeath', 'massmorph', 'charmperfume', 'venomdisaster', 'earthcoat'],
-		baseSignatureMove: "deadlyweed",
-		signatureMove: "Deadly Weed",
-	},
-	"Yanmamon": {
-		species: "Yanmamon",
-		ability: "Virus",
-		moves: ['electriccloud', 'windcutter', 'confusedstorm', 'thunderjustice', 'earthcoat', 'massmorph', 'charmperfume', 'bug', 'holyflash'],
-		baseSignatureMove: "thunderray",
-		signatureMove: "Thunder Ray",
-	},
-	//Ultimates//
-	"Andromon": {
-		species: "Andromon",
-		ability: "Vaccine",
-		moves: ['windcutter', 'electriccloud', 'megalospark', 'thunderjustice', 'upgrade', 'antiattackfield', 'deleteprogram', 'gigawattlaser', 'bug'],
-		baseSignatureMove: "spiralsword",
-		signatureMove: "Spiral Sword",
-	},
-	"Angewomon": {
-		species: "Angewomon",
-		ability: "Vaccine",
-		moves: ['wingshoes', 'windcutter', 'thunderjustice', 'fightingaura', 'electriccloud', 'saintheal', 'holybreath', 'holyflash', 'saintray', 'warcry'],
-		baseSignatureMove: "celestialarrow",
-		signatureMove: "Celestial Arrow",
-	},
-	"Beastmon": {
-		species: "Beastmon",
-		ability: "Virus",
-		moves: ['warcry', 'sonicjab', 'megatonpunch', 'venomdisaster', 'shadowfall', 'gigafreeze', 'bug', 'icestatue'],
-		baseSignatureMove: "vampirewave",
-		signatureMove: "Vampire Wave",
-	},
-	"BlackWereGarurumon": {
-		species: "BlackWereGarurumon",
-		ability: "Virus",
-		moves: ['warcry', 'musclecharge', 'sonicjab', 'megatonpunch', 'rockfall', 'burningheart', 'heatbreath', 'evilsquall', 'hideandseek', 'winterblast', 'gigafreeze'],
-		baseSignatureMove: "fullmoonkick",
-		signatureMove: "Full Moon Kick",
-	},
-	"BlueMeramon": {
-		species: "BlueMeramon",
-		ability: "Vaccine",
-		moves: ['burningheart', 'firewall', 'meltdown', 'infinityburn', 'aurorafreeze', 'holyflash', 'fightingaura', 'gigafreeze'],
-		baseSignatureMove: "coldflame",
-		signatureMove: "Cold Flame",
-	},
-	"Digitamamon": {
-		species: "Digitamamon",
-		ability: "Data",
-		moves: ['hailspear', 'blackout', 'bug', 'shadowfall', 'firetower', 'poopattackfield', 'poopfling', 'upgrade'],
-		baseSignatureMove: "nightmaresyndrome",
-		signatureMove: "Nightmare Syndrome",
-	},
-	"DoruGreymon": {
-		species: "DoruGreymon",
-		ability: "Data",
-		moves: ['burningheart', 'infinityburn', 'megalospark', 'musclecharge', 'sonicjab', 'fightingaura', 'busterdrive', 'mechanicalclaw', 'antiattackfield'],
-		baseSignatureMove: "metalmeteor",
-		signatureMove: "Metal Meteor",
-	},
-	"Etemon": {
-		species: "Etemon",
-		ability: "Virus",
-		moves: ['earthcoat', 'rockfall', 'sonicjab', 'megatonpunch', 'charmperfume', 'bug', 'guerrillapoop', 'extremepoopdeath'],
-		baseSignatureMove: "loveserenade",
-		signatureMove: "Love Serenade",
-	},
-	"Garudamon": {
-		species: "Garudamon",
-		ability: "Vaccine",
-		moves: ['wingshoes', 'windcutter', 'burningheart', 'firetower', 'meltdown', 'infinityburn', 'warcry', 'busterdrive', 'holyflash'],
-		baseSignatureMove: "shadowwing",
-		signatureMove: "Shadow Wing",
-	},
-	"Gigadramon": {
-		species: "Gigadramon",
-		ability: "Data",
-		moves: ['upgrade', 'gigawattlaser', 'dgdimension', 'darkspirit', 'hideandseek', 'windcutter', 'electriccloud', 'gigafreeze'],
-		baseSignatureMove: "energyshot",
-		signatureMove: "Energy Shot",
-	},
-	"Giromon": {
-		species: "Giromon",
-		ability: "Vaccine",
-		moves: ['upgrade', 'deleteprogram', 'reverseprogram', 'reboundstrike', 'megatonpunch', 'staticelectricity', 'megalospark', 'firewall'],
-		baseSignatureMove: "deadlybomb",
-		signatureMove: "Deadly Bomb",
-	},
-	"IceLeomon": {
-		species: "IceLeomon",
-		ability: "Data",
-		moves: ['musclecharge', 'warcry', 'gigafreeze', 'icestatue', 'megatonpunch', 'winterblast', 'aurorafreeze', 'saintshield', 'burningheart'],
-		baseSignatureMove: "fistofice",
-		signatureMove: "Fist of Ice",
-	},
-	"LadyDevimon": {
-		species: "LadyDevimon",
-		ability: "Virus",
-		moves: ['wingshoes', 'windcutter', 'evilsquall', 'fightingaura', 'electriccloud', 'evilfantasy', 'charmperfume', 'darkspirit', 'chaoscloud', 'warcry'],
-		baseSignatureMove: "darknesswave",
-		signatureMove: "Darkness Wave",
-	},
-	"Lillymon": {
-		species: "Lillymon",
-		ability: "Data",
-		moves: ['earthcoat', 'charmperfume', 'rootbind', 'venomdisaster', 'wingshoes', 'windcutter', 'confusedstorm', 'saintheal', 'holybreath'],
-		baseSignatureMove: "flowercannon",
-		signatureMove: "Flower Cannon",
-	},
-	"MagnaAngemon": {
-		species: "MagnaAngemon",
-		ability: "Vaccine",
-		moves: ['saintheal', 'saintshield', 'shiningnova', 'thunderjustice', 'antiattackfield', 'gigawattlaser', 'deleteprogram', 'sonicjab', 'megalospark', 'reboundstrike', 'holyjudgment', 'wingshoes'],
-		baseSignatureMove: "gateofdestiny",
-		signatureMove: "Gate of Destiny",
-	},
-	"Mamemon": {
-		species: "Mamemon",
-		ability: "Data",
-		moves: ['musclecharge', 'sonicjab', 'fightingaura', 'reboundstrike', 'antiattackfield', 'upgrade', 'reverseprogram', 'gigawattlaser', 'gigafreeze', 'burningheart'],
-		baseSignatureMove: "smilebomber",
-		signatureMove: "Smile Bomber",
-	},
-	"Megadramon": {
-		species: "Megadramon",
-		ability: "Virus",
-		moves: ['mechanicalclaw', 'upgrade', 'deleteprogram', 'blackout', 'shadowfall', 'staticelectricity', 'megalospark', 'firetower'],
-		baseSignatureMove: "genocideattack",
-		signatureMove: "Genocide Attack",
-	},
-	"MegaKabuterimon": {
-		species: "MegaKabuterimon",
-		ability: "Vaccine",
-		moves: ['staticelectricity', 'rockfall', 'megatonpunch', 'megalospark', 'reboundstrike', 'earthcoat', 'massmorph', 'bug'],
-		baseSignatureMove: "hornbuster",
-		signatureMove: "Horn Buster",
-	},
-	"MegaSeadramon": {
-		species: "MegaSeadramon",
-		ability: "Data",
-		moves: ['hailspear', 'waterblitz', 'gigafreeze', 'aurorafreeze', 'heatbreath', 'meltdown', 'shiningnova', 'staticelectricity', 'megalospark'],
-		baseSignatureMove: "lightningjavelin",
-		signatureMove: "Lightning Javelin",
-	},
-	"Meicrackmon": {
-		species: "meicrackmon",
-		ability: "Vaccine",
-		moves: ['warcry', 'windcutter', 'fightingaura', 'megatonpunch', 'mechanicalclaw', 'venomdisaster', 'holyjudgment', 'saintray', 'holybreath'],
-		baseSignatureMove: "modestlystun",
-		signatureMove: "Modestly Stun",
-	},
-	"MeicrackmonViciousMode": {
-		name: "Meicrackmon",
-		species: "meicrackmonviciousmode",
-		ability: "Virus",
-		moves: ['warcry', 'windcutter', 'fightingaura', 'megatonpunch', 'mechanicalclaw', 'venomdisaster', 'shadowfall', 'evilsquall', 'blackout'],
-		baseSignatureMove: "berserkthinking",
-		signatureMove: "Berserk Thinking",
-	},
-	"MetalGreymonVaccine": {
-		name: "MetalGreymon",
-		species: "metalgreymonvaccine",
-		ability: "Vaccine",
-		moves: ['burningheart', 'heatbreath', 'firetower', 'infinityburn', 'musclecharge', 'sonicjab', 'reboundstrike', 'busterdrive', 'mechanicalclaw', 'gigawattlaser', 'deleteprogram'],
-		baseSignatureMove: "gigadestroyer",
-		signatureMove: "Giga Destroyer",
-	},
-	"MetalGreymonVirus": {
-		name: "MetalGreymon",
-		species: "metalgreymonvirus",
-		ability: "Virus",
-		moves: ['burningheart', 'heatbreath', 'firetower', 'infinityburn', 'musclecharge', 'sonicjab', 'blackout', 'shadowfall', 'mechanicalclaw', 'gigawattlaser', 'deleteprogram'],
-		baseSignatureMove: "revengeflame",
-		signatureMove: "Revenge Flame",
-	},
-	"MetalMamemon": {
-		species: "MetalMamemon",
-		ability: "Data",
-		moves: ['musclecharge', 'mechanicalclaw', 'fightingaura', 'reboundstrike', 'deleteprogram', 'upgrade', 'reverseprogram', 'megalospark', 'winterblast', 'burningheart'],
-		baseSignatureMove: "energybomb",
-		signatureMove: "Energy Bomb",
-	},
-	"Meteormon": {
-		species: "Meteormon",
-		ability: "Data",
-		moves: ['earthcoat', 'rockfall', 'heatbreath', 'prominencebeam', 'gigafreeze', 'megatonpunch', 'fightingaura'],
-		baseSignatureMove: "galacticflare",
-		signatureMove: "Galactic Flare",
-	},
-	"Monzaemon": {
-		species: "Monzaemon",
-		ability: "Vaccine",
-		moves: ['fightingaura', 'poopattackfield', 'reboundstrike', 'megatonpunch', 'saintheal', 'holybreath', 'saintshield', 'saintray', 'charmperfume'],
-		baseSignatureMove: "heartsattack",
-		signatureMove: "Hearts Attack",
-	},
-	"Myotismon": {
-		species: "Myotismon",
-		ability: "Virus",
-		moves: ['darkspirit', 'blackout', 'evilfantasy', 'electriccloud', 'aurorafreeze', 'evilsquall', 'wingshoes', 'confusedstorm', 'venomdisaster', 'reverseprogram'],
-		baseSignatureMove: "grislywing",
-		signatureMove: "Grisly Wing",
-	},
-	"Piximon": {
-		species: "Piximon",
-		ability: "Data",
-		moves: ['saintheal', 'holybreath', 'saintshield', 'fightingaura', 'shiningnova', 'wingshoes', 'windcutter', 'electriccloud', 'antiattackfield', 'earthcoat', 'bug'],
-		baseSignatureMove: "pitbomb",
-		signatureMove: "Pit Bomb",
-	},
-	"ShogunGekomon": {
-		species: "ShogunGekomon",
-		ability: "Data",
-		moves: ['earthcoat', 'confusedstorm', 'oceanwave', 'icestatue', 'gigafreeze', 'aurorafreeze', 'warcry', 'fightingaura', 'charmperfume'],
-		baseSignatureMove: "musicalfist",
-		signatureMove: "Musical Fist",
-	},
-	"SkullGreymon": {
-		species: "SkullGreymon",
-		ability: "Virus",
-		moves: ['blackout', 'shadowfall', 'evilfantasy', 'evilsquall', 'heatbreath', 'firetower', 'infinityburn', 'sonicjab', 'reboundstrike', 'busterdrive', 'mechanicalclaw', 'deleteprogram'],
-		baseSignatureMove: "oblivionbird",
-		signatureMove: "Oblivion Bird",
-	},
-	"Tekkamon": {
-		species: "Tekkamon",
-		ability: "Virus",
-		moves: ['upgrade', 'deleteprogram', 'reverseprogram', 'reboundstrike', 'megatonpunch', 'staticelectricity', 'shadowfall', 'firewall'],
-		baseSignatureMove: "fragbomb",
-		signatureMove: "Frag Bomb",
-	},
-	"Vademon": {
-		species: "Vademon",
-		ability: "Virus",
-		moves: ['massmorph', 'charmperfume', 'bug', 'rockfall', 'upgrade', 'deleteprogram', 'dgdimension', 'cootieskick'],
-		baseSignatureMove: "unidentifiedflyingkiss",
-		signatureMove: "Unidentified Flying Kiss",
-	},
-	"Vermilimon": {
-		species: "Vermilimon",
-		ability: "Data",
-		moves: ['heatbreath', 'firetower', 'infinityburn', 'prominencebeam', 'earthcoat', 'rockfall', 'musclecharge', 'busterdrive'],
-		baseSignatureMove: "volcanicstrikes",
-		signatureMove: "Volcanic Strike S",
-	},
-	"WaruMonzaemon": {
-		species: "WaruMonzaemon",
-		ability: "Virus",
-		moves: ['fightingaura', 'poopattackfield', 'reboundstrike', 'megatonpunch', 'darkspirit', 'evilfantasy', 'hideandseek', 'charmperfume'],
-		baseSignatureMove: "heartbreakattack",
-		signatureMove: "Heartbreak Attack",
-	},
-	"WaruSeadramon": {
-		species: "WaruSeadramon",
-		ability: "Virus",
-		moves: ['hailspear', 'waterblitz', 'gigafreeze', 'aurorafreeze', 'heatbreath', 'meltdown', 'staticelectricity', 'megalospark', 'evilsquall'],
-		baseSignatureMove: "evilicicle",
-		signatureMove: "Evil Icicle",
-	},
-	"WereGarurumon": {
-		species: "WereGarurumon",
-		ability: "Data",
-		moves: ['warcry', 'musclecharge', 'sonicjab', 'megatonpunch', 'rockfall', 'burningheart', 'heatbreath', 'icestatue', 'aurorafreeze', 'winterblast', 'gigafreeze'],
-		baseSignatureMove: "wolfclaw",
-		signatureMove: "Wolf Claw",
-	},
-	"Whamon": {
-		species: "Whamon",
-		ability: "Vaccine",
-		moves: ['waterblitz', 'oceanwave', 'icestatue', 'aurorafreeze', 'massmorph', 'charmperfume', 'saintshield', 'confusedstorm', 'busterdrive', 'saintheal'],
-		baseSignatureMove: "tidalwave",
-		signatureMove: "Tidal Wave",
-	},
-	"Zudomon": {
-		species: "Zudomon",
-		ability: "Vaccine",
-		moves: ['electriccloud', 'thunderjustice', 'hailspear', 'icestatue', 'mechanicalclaw', 'aurorafreeze', 'antiattackfield', 'warcry', 'reboundstrike'],
-		baseSignatureMove: "vulcanshammer",
-		signatureMove: "Vulcan's Hammer",
-	},
-	//Mega//
-	"Alphamon": {
-		species: "Alphamon",
-		ability: "Vaccine",
-		moves: ['saintshield', 'saintray', 'holyjudgment', 'shiningnova', 'warcry', 'sonicjab', 'reboundstrike', 'upgrade', 'deleteprogram', 'dgdimension', 'burningheart', 'thunderjustice'],
-		baseSignatureMove: "bladeofthedragonking",
-		signatureMove: "Blade of the Dragon King",
-	},
-	"BlackMetalGarurumon": {
-		species: "BlackMetalGarurumon",
-		ability: "Virus",
-		moves: ['warcry', 'mechanicalclaw', 'megalospark', 'winterblast', 'gigafreeze', 'icestatue', 'shadowfall', 'evilfantasy', 'aurorafreeze'],
-		baseSignatureMove: "garurutomahawk",
-		signatureMove: "Garuru Tomahawk",
-	},
-	"BlackWarGreymon": {
-		species: "BlackWarGreymon",
-		ability: "Virus",
-		moves: ['burningheart', 'firetower', 'firewall', 'shadowfall', 'musclecharge', 'blackout', 'busterdrive', 'mechanicalclaw', 'antiattackfield', 'deleteprogram', 'evilfantasy'],
-		baseSignatureMove: "blacktornado",
-		signatureMove: "Black Tornado",
-	},
-	"Boltmon": {
-		species: "Boltmon",
-		ability: "Data",
-		moves: ['electriccloud', 'megalospark', 'fightingaura', 'megatonpunch', 'mechanicalclaw', 'gigawattlaser', 'meltdown', 'infinityburn'],
-		baseSignatureMove: "tomahawkstinger",
-		signatureMove: "Tomahawk Stinger",
-	},
-	"CherubimonEvil": {
-		name: "Cherubimon",
-		species: "CherubimonEvil",
-		ability: "Virus",
-		moves: ['wingshoes', 'thunderjustice', 'megalospark', 'megatonpunch', 'blackout', 'chaoscloud', 'shadowfall', 'evilsquall', 'dgdimension', 'gigawattlaser'],
-		baseSignatureMove: "lightningspear",
-		signatureMove: "Lightning Spear",
-	},
-	"CherubimonGood": {
-		name: "Cherubimon",
-		species: "CherubimonGood",
-		ability: "Vaccine",
-		moves: ['wingshoes', 'thunderjustice', 'megalospark', 'megatonpunch', 'holybreath', 'saintray', 'holyjudgment', 'shiningnova', 'dgdimension', 'gigawattlaser'],
-		baseSignatureMove: "heavensjudgment",
-		signatureMove: "Heaven's Judgment",
-	},
-	"Devitamamon": {
-		species: "Devitamamon",
-		ability: "Data",
-		moves: ['hailspear', 'blackout', 'evilfantasy', 'shadowfall', 'evilsquall', 'poopattackfield', 'extremepoopdeath', 'firetower'],
-		baseSignatureMove: "blackdeathcloud",
-		signatureMove: "Black Death Cloud",
-	},
-	"Dorugoramon": {
-		species: "Dorugoramon",
-		ability: "Data",
-		moves: ['burningheart', 'infinityburn', 'prominencebeam', 'megalospark', 'thunderjustice', 'fightingaura', 'busterdrive', 'sonicjab', 'mechanicalclaw', 'antiattackfield', 'deleteprogram', 'gigawattlaser'],
-		baseSignatureMove: "bravemetal",
-		signatureMove: "Brave Metal",
-	},
-	"Ebemon": {
-		species: "Ebemon",
-		ability: "Virus",
-		moves: ['confusedstorm', 'electriccloud', 'massmorph', 'bug', 'upgrade', 'gigawattlaser', 'dgdimension', 'cootieskick'],
-		baseSignatureMove: "brainrupture",
-		signatureMove: "Brain Rupture",
-	},
-	"HerculesKabuterimon": {
-		species: "HerculesKabuterimon",
-		ability: "Data",
-		moves: ['confusedstorm', 'electriccloud', 'megalospark', 'thunderjustice', 'charmperfume', 'massmorph', 'bug', 'saintshield', 'holyflash', 'fightingaura'],
-		baseSignatureMove: "gigablaster",
-		signatureMove: "Giga Blaster",
-	},
-	"HiAndromon": {
-		species: "HiAndromon",
-		ability: "Vaccine",
-		moves: ['sonicjab', 'electriccloud', 'megalospark', 'thunderjustice', 'saintheal', 'upgrade', 'antiattackfield', 'deleteprogram', 'gigawattlaser', 'bug', 'busterdrive', 'megatonpunch'],
-		baseSignatureMove: "atomicray",
-		signatureMove: "Atomic Ray",
-	},
-	"Lilithmon": {
-		species: "Lilithmon",
-		ability: "Virus",
-		moves: ['evilfantasy', 'chaoscloud', 'shadowfall', 'windcutter', 'confusedstorm', 'charmperfume', 'venomdisaster', 'bug', 'aurorafreeze', 'mechanicalclaw'],
-		baseSignatureMove: "phantompain",
-		signatureMove: "Phantom Pain",
-	},
-	"Machinedramon": {
-		species: "Machinedramon",
-		ability: "Virus",
-		moves: ['mechanicalclaw', 'upgrade', 'gigawattlaser', 'dgdimension', 'megalospark', 'thunderjustice', 'electriccloud', 'hideandseek', 'firewall', 'gigafreeze'],
-		baseSignatureMove: "infinitycannon",
-		signatureMove: "Infinity Cannon",
-	},
-	"Magnadramon": {
-		species: "Magnadramon",
-		ability: "Vaccine",
-		moves: ['saintheal', 'holybreath', 'holyflash', 'holyjudgment', 'burningheart', 'firetower', 'prominencebeam', 'wingshoes', 'busterdrive', 'fightingaura'],
-		baseSignatureMove: "firetornado",
-		signatureMove: "Fire Tornado",
-	},
-	"MarineAngemon": {
-		species: "MarineAngemon",
-		ability: "Vaccine",
-		moves: ['waterblitz', 'oceanwave', 'aurorafreeze', 'icestatue', 'saintheal', 'holybreath', 'saintshield', 'shiningnova', 'confusedstorm', 'wingshoes', 'antiattackfield', 'earthcoat'],
-		baseSignatureMove: "oceanlove",
-		signatureMove: "Ocean Love",
-	},
-	"MetalEtemon": {
-		species: "MetalEtemon",
-		ability: "Virus",
-		moves: ['reverseprogram', 'dgdimension', 'upgrade', 'gigawattlaser', 'charmperfume', 'holyflash', 'guerrillapoop', 'extremepoopdeath'],
-		baseSignatureMove: "darkrecital",
-		signatureMove: "Dark Recital",
-	},
-	"MetalGarurumon": {
-		species: "MetalGarurumon",
-		ability: "Data",
-		moves: ['warcry', 'mechanicalclaw', 'busterdrive', 'winterblast', 'gigafreeze', 'icestatue', 'rockfall', 'meltdown', 'aurorafreeze'],
-		baseSignatureMove: "icewolfclaw",
-		signatureMove: "Ice Wolf Claw",
-	},
-	"MetalSeadramon": {
-		species: "MetalSeadramon",
-		ability: "Data",
-		moves: ['waterblitz', 'winterblast', 'oceanwave', 'icestatue', 'infinityburn', 'staticelectricity', 'megalospark', 'upgrade', 'deleteprogram'],
-		baseSignatureMove: "riverofpower",
-		signatureMove: "River of Power",
-	},
-	"Ophanimon": {
-		species: "Ophanimon",
-		ability: "Vaccine",
-		moves: ['wingshoes', 'windcutter', 'thunderjustice', 'fightingaura', 'aurorafreeze', 'saintheal', 'holybreath', 'saintshield', 'saintray', 'warcry'],
-		baseSignatureMove: "edensjavelin",
-		signatureMove: "Eden's Javelin",
-	},
-	"Phoenixmon": {
-		species: "Phoenixmon",
-		ability: "Vaccine",
-		moves: ['wingshoes', 'windcutter', 'thunderjustice', 'burningheart', 'meltdown', 'prominencebeam', 'warcry', 'busterdrive', 'holyjudgment', 'shiningnova', 'infinityburn'],
-		baseSignatureMove: "starlightexplosion",
-		signatureMove: "Starlight Explosion",
-	},
-	"PrinceMamemon": {
-		species: "PrinceMamemon",
-		ability: "Data",
-		moves: ['musclecharge', 'sonicjab', 'megatonpunch', 'fightingaura', 'upgrade', 'reverseprogram', 'deleteprogram', 'dgdimension', 'holyflash', 'poopattackfield'],
-		baseSignatureMove: "smilewarhead",
-		signatureMove: "Smile Warhead",
-	},
-	"Raguelmon": {
-		species: "Raguelmon",
-		ability: "Virus",
-		moves: ['warcry', 'windcutter', 'fightingaura', 'megatonpunch', 'mechanicalclaw', 'venomdisaster', 'shadowfall', 'evilsquall', 'blackout', 'deleteprogram'],
-		baseSignatureMove: "darknesszone",
-		signatureMove: "Darkness Zone",
-	},
-	"Rasielmon": {
-		species: "Rasielmon",
-		ability: "Vaccine",
-		moves: ['warcry', 'windcutter', 'fightingaura', 'megatonpunch', 'mechanicalclaw', 'venomdisaster', 'holyjudgment', 'saintray', 'holybreath', 'dgdimension'],
-		baseSignatureMove: "knowledgestream",
-		signatureMove: "Knowledge Stream",
-	},
-	"Rosemon": {
-		species: "Rosemon",
-		ability: "Data",
-		moves: ['earthcoat', 'charmperfume', 'rootbind', 'venomdisaster', 'wingshoes', 'confusedstorm', 'evilfantasy', 'saintheal', 'shiningnova'],
-		baseSignatureMove: "thornwhip",
-		signatureMove: "Thorn Whip",
-	},
-	"SaberLeomon": {
-		species: "SaberLeomon",
-		ability: "Data",
-		moves: ['musclecharge', 'warcry', 'fightingaura', 'busterdrive', 'earthcoat', 'venomdisaster', 'saintshield', 'holyjudgment', 'mechanicalclaw', 'burningheart', 'infinityburn', 'shiningnova'],
-		baseSignatureMove: "howlingcrusher",
-		signatureMove: "Howling Crusher",
-	},
-	"Seraphimon": {
-		species: "Seraphimon",
-		ability: "Vaccine",
-		moves: ['saintheal', 'saintshield', 'shiningnova', 'thunderjustice', 'antiattackfield', 'gigawattlaser', 'deleteprogram', 'sonicjab', 'megalospark', 'reboundstrike', 'holyjudgment', 'wingshoes'],
-		baseSignatureMove: "strikeofthesevenstars",
-		signatureMove: "Strike of the Seven Stars",
-	},
-	"VenomMyotismon": {
-		species: "VenomMyotismon",
-		ability: "Virus",
-		moves: ['darkspirit', 'blackout', 'evilfantasy', 'megalospark', 'icestatue', 'shadowfall', 'wingshoes', 'staticelectricity', 'venomdisaster', 'deleteprogram'],
-		baseSignatureMove: "venominfusion",
-		signatureMove: "Venom Infusion",
-	},
-	"Vikemon": {
-		species: "Vikemon",
-		ability: "Vaccine",
-		moves: ['hailspear', 'winterblast', 'icestatue', 'aurorafreeze', 'mechanicalclaw', 'antiattackfield', 'warcry', 'reboundstrike', 'megatonpunch', 'holyflash'],
-		baseSignatureMove: "arcticblizzard",
-		signatureMove: "Arctic Blizzard",
-	},
-	"WarGreymon": {
-		species: "WarGreymon",
-		ability: "Vaccine",
-		moves: ['burningheart', 'firetower', 'firewall', 'infinityburn', 'musclecharge', 'sonicjab', 'busterdrive', 'mechanicalclaw', 'antiattackfield', 'deleteprogram', 'fightingaura'],
-		baseSignatureMove: "terraforce",
-		signatureMove: "Terra Force",
-	},
-};
-
-exports.Sets = sets;
+module.exports = [
+    {
+        "species": "Botamon",
+        "ability": "Data",
+        "moves": ["Acid Bubble"]
+    },
+    {
+        "species": "Dodomon",
+        "ability": "Data",
+        "moves": ["Acid Bubble"]
+    },
+    {
+        "species": "Kuramon",
+        "ability": "Virus",
+        "moves": ["Acid Bubble"]
+    },
+    {
+        "species": "Poyomon",
+        "ability": "Data",
+        "moves": ["Acid Bubble"]
+    },
+    {
+        "species": "Punimon",
+        "ability": "Data",
+        "moves": ["Acid Bubble"]
+    },
+    {
+        "species": "Yuramon",
+        "ability": "Data",
+        "moves": ["Acid Bubble"]
+    },
+    {
+        "species": "Bukamon",
+        "ability": "Data",
+        "moves": ["Acid Bubble"]
+    },
+    {
+        "species": "Dorimon",
+        "ability": "Data",
+        "moves": ["Acid Bubble"]
+    },
+    {
+        "species": "Koromon",
+        "ability": "Data",
+        "moves": ["Acid Bubble"]
+    },
+    {
+        "species": "Motimon",
+        "ability": "Data",
+        "moves": ["Acid Bubble"]
+    },
+    {
+        "species": "Nyaromon",
+        "ability": "Vaccine",
+        "moves": ["Acid Bubble"]
+    },
+    {
+        "species": "Tanemon",
+        "ability": "Data",
+        "moves": ["Acid Bubble"]
+    },
+    {
+        "species": "Tokomon",
+        "ability": "Data",
+        "moves": ["Acid Bubble"]
+    },
+    {
+        "species": "Tsumemon",
+        "ability": "Virus",
+        "moves": ["Acid Bubble"]
+    },
+    {
+        "species": "Tsunomon",
+        "ability": "Data",
+        "moves": ["Acid Bubble"]
+    },
+    {
+        "species": "Agumon",
+        "ability": "Vaccine",
+        "moves": ["Burning Heart", "Heat Breath", "Fire Tower", "Infinity Burn", "Muscle Charge", "Sonic Jab", "Wind Cutter"],
+        "reservedMove": "Pepper Breath"
+    },
+    {
+        "species": "Aruraumon",
+        "ability": "Virus",
+        "moves": ["Charm Perfume", "Root Bind", "Venom Disaster", "Water Blitz", "Super Stinky Jet", "Shadow Fall", "Blackout"],
+        "reservedMove": "Nemesis Ivy"
+    },
+    {
+        "species": "Betamon",
+        "ability": "Virus",
+        "moves": ["Static Electricity", "Electric Cloud", "Megalo Spark", "Hail Spear", "Water Blitz", "Ocean Wave"],
+        "reservedMove": "Electric Shock"
+    },
+    {
+        "species": "Biyomon",
+        "ability": "Vaccine",
+        "moves": ["Wing Shoes", "Wind Cutter", "Burning Heart", "Heat Breath", "Fire Tower", "Meltdown", "War Cry", "Holy Flash", "Root Bind"],
+        "reservedMove": "Spiral Twister"
+    },
+    {
+        "species": "ClearAgumon",
+        "ability": "Vaccine",
+        "moves": ["Heat Breath", "Holy Terrain", "Saint Ray", "Holy Flash", "Mechanical Claw", "Upgrade", "Gigawatt Laser"],
+        "reservedMove": "Precious Flame"
+    },
+    {
+        "species": "DemiDevimon",
+        "ability": "Virus",
+        "moves": ["Blackout", "Evil Fantasy", "Shadow Fall", "Hide and Seek", "Wind Cutter", "Confused Storm", "Cooties Kick"],
+        "reservedMove": "Demi Dart"
+    },
+    {
+        "species": "Dokunemon",
+        "ability": "Virus",
+        "moves": ["Static Electricity", "Shadow Fall", "Earth Coat", "Mass Morph", "Bug", "Venom Disaster", "Blackout"],
+        "reservedMove": "Worm Venom"
+    },
+    {
+        "species": "Dorumon",
+        "ability": "Data",
+        "moves": ["Burning Heart", "Megalo Spark", "Muscle Charge", "Sonic Jab", "Fighting Aura", "Buster Drive", "Mechanical Claw", "Anti-Attack Field"],
+        "reservedMove": "Metal Cannon"
+    },
+    {
+        "species": "Elecmon",
+        "ability": "Data",
+        "moves": ["Static Electricity", "Electric Cloud", "Megalo Spark", "Thunder Justice", "Saint Heal", "War Cry", "Fighting Aura"],
+        "reservedMove": "Super Thunder Strike"
+    },
+    {
+        "species": "Gabumon",
+        "ability": "Data",
+        "moves": ["Heat Breath", "Fire Tower", "Hail Spear", "Winter Blast", "Giga Freeze", "Ice Statue", "Muscle Charge", "Sonic Jab"],
+        "reservedMove": "Blue Blaster"
+    },
+    {
+        "species": "Goburimon",
+        "ability": "Virus",
+        "moves": ["Heat Breath", "Fire Tower", "Infinity Burn", "Muscle Charge", "Burning Heart", "Rebound Strike", "Megaton Punch", "Shadow Fall", "Poop Toss"],
+        "reservedMove": "Goblin Strike"
+    },
+    {
+        "species": "Gomamon",
+        "ability": "Vaccine",
+        "moves": ["Mechanical Claw", "Water Blitz", "Ocean Wave", "Ice Statue", "Aurora Freeze", "War Cry", "Rebound Strike"],
+        "reservedMove": "Marching Fishes"
+    },
+    {
+        "species": "Gotsumon",
+        "ability": "Data",
+        "moves": ["Earth Coat", "Rock Fall", "Charm Perfume", "Venom Disaster", "Bug", "Megaton Punch", "Fighting Aura"],
+        "reservedMove": "Rock Fist"
+    },
+    {
+        "species": "Kunemon",
+        "ability": "Virus",
+        "moves": ["Static Electricity", "Megalo Spark", "Earth Coat", "Mass Morph", "Bug", "Venom Disaster", "Super Stinky Jet"],
+        "reservedMove": "Electric Thread"
+    },
+    {
+        "species": "ModokiBetamon",
+        "ability": "Vaccine",
+        "moves": ["Static Electricity", "Electric Cloud", "Confused Storm", "Hail Spear", "Ice Statue", "Root Bind", "Water Blitz"],
+        "reservedMove": "Aqua Tower"
+    },
+    {
+        "species": "Muchomon",
+        "ability": "Data",
+        "moves": ["Burning Heart", "Hail Spear", "Water Blitz", "Ice Statue", "Wind Cutter", "Infinity Burn", "Firewall"],
+        "reservedMove": "Tropical Beak"
+    },
+    {
+        "species": "Otamamon",
+        "ability": "Data",
+        "moves": ["Hail Spear", "Water Blitz", "Ocean Wave", "Ice Statue", "Bug", "Charm Perfume", "War Cry"],
+        "reservedMove": "Lullaby Bubble"
+    },
+    {
+        "species": "Palmon",
+        "ability": "Vaccine",
+        "moves": ["Charm Perfume", "Root Bind", "Venom Disaster", "Water Blitz", "Super Stinky Jet", "Burning Heart", "Confused Storm"],
+        "reservedMove": "Poison Ivy"
+    },
+    {
+        "species": "Patamon",
+        "ability": "Data",
+        "moves": ["Wing Shoes", "Wind Cutter", "Sonic Jab", "Buster Drive", "Saint Heal", "Holy Breath", "Holy Flash"],
+        "reservedMove": "Boom Bubble"
+    },
+    {
+        "species": "Penguinmon",
+        "ability": "Data",
+        "moves": ["Muscle Charge", "Hail Spear", "Water Blitz", "Ice Statue", "Wind Cutter", "Megalo Spark", "Earth Coat"],
+        "reservedMove": "Eternal Slapping"
+    },
+    {
+        "species": "Psychemon",
+        "ability": "Vaccine",
+        "moves": ["Heat Breath", "Fire Tower", "Static Electricity", "Winter Blast", "Confused Storm", "Ice Statue", "Muscle Charge", "Sonic Jab"],
+        "reservedMove": "Colored Sparkle"
+    },
+    {
+        "species": "Salamon",
+        "ability": "Vaccine",
+        "moves": ["Saint Heal", "Holy Breath", "Holy Flash", "Saint Ray", "War Cry", "Anti-Attack Field", "Fighting Aura"],
+        "reservedMove": "Puppy Howl"
+    },
+    {
+        "species": "Shamanmon",
+        "ability": "Virus",
+        "moves": ["Charm Perfume", "Root Bind", "Rock Fall", "Muscle Charge", "War Cry", "Rebound Strike", "Megaton Punch", "Shadow Fall", "Poop Toss"],
+        "reservedMove": "Dancing Bone"
+    },
+    {
+        "species": "SnowAgumon",
+        "ability": "Vaccine",
+        "moves": ["Burning Heart", "Hail Spear", "Winter Blast", "Ice Statue", "Muscle Charge", "Sonic Jab", "Wind Cutter"],
+        "reservedMove": "Little Blizzard"
+    },
+    {
+        "species": "SnowGoburimon",
+        "ability": "Virus",
+        "moves": ["Hail Spear", "Winter Blast", "Ice Statue", "Muscle Charge", "War Cry", "Rebound Strike", "Megaton Punch", "Shadow Fall", "Poop Toss"],
+        "reservedMove": "SnowGob Bolt"
+    },
+    {
+        "species": "Tentomon",
+        "ability": "Data",
+        "moves": ["Static Electricity", "Confused Storm", "Electric Cloud", "Megalo Spark", "Mass Morph", "Bug", "Rock Fall", "Fighting Aura"],
+        "reservedMove": "Super Shocker"
+    },
+    {
+        "species": "ToyAgumon",
+        "ability": "Data",
+        "moves": ["Heat Breath", "Firewall", "Prominence Beam", "Sonic Jab", "Mechanical Claw", "Upgrade", "Gigawatt Laser"],
+        "reservedMove": "Plastic Blaze"
+    },
+    {
+        "species": "Tsukaimon",
+        "ability": "Virus",
+        "moves": ["Wing Shoes", "Wind Cutter", "Sonic Jab", "Dark Spirit", "Blackout", "Evil Fantasy", "Chaos Cloud"],
+        "reservedMove": "Evil Spell"
+    },
+    {
+        "species": "Airdramon",
+        "ability": "Vaccine",
+        "moves": ["Heat Breath", "Fire Tower", "Meltdown", "Infinity Burn", "Wing Shoes", "Wind Cutter", "Confused Storm", "Holy Breath"],
+        "reservedMove": "Spinning Needle"
+    },
+    {
+        "species": "Akatorimon",
+        "ability": "Data",
+        "moves": ["Heat Breath", "Firewall", "Wing Shoes", "Wind Cutter", "Megalo Spark", "Ice Statue", "Guerrilla Poop"],
+        "reservedMove": "Scar-Red Eye"
+    },
+    {
+        "species": "Angemon",
+        "ability": "Vaccine",
+        "moves": ["Wing Shoes", "Wind Cutter", "Sonic Jab", "Buster Drive", "Saint Heal", "Holy Breath", "Holy Flash", "Saint Ray", "Holy Judgment"],
+        "reservedMove": "Hand of Fate"
+    },
+    {
+        "species": "Bakemon",
+        "ability": "Virus",
+        "moves": ["Dark Spirit", "Blackout", "Evil Fantasy", "Shadow Fall", "Mass Morph", "Ice Statue", "Static Electricity", "Electric Cloud", "Thunder Justice"],
+        "reservedMove": "Evil Charm"
+    },
+    {
+        "species": "Birdramon",
+        "ability": "Vaccine",
+        "moves": ["Wing Shoes", "Wind Cutter", "Burning Heart", "Heat Breath", "Fire Tower", "Meltdown", "Infinity Burn", "War Cry", "Holy Flash"],
+        "reservedMove": "Meteor Wing"
+    },
+    {
+        "species": "BlackGatomon",
+        "ability": "Virus",
+        "moves": ["War Cry", "Sonic Jab", "Fighting Aura", "Evil Squall", "Evil Fantasy", "Hide and Seek", "Giga Freeze"],
+        "reservedMove": "Dark Paw"
+    },
+    {
+        "species": "Centarumon",
+        "ability": "Data",
+        "moves": ["Fire Tower", "Firewall", "Prominence Beam", "Saint Heal", "Saint Ray", "Fighting Aura", "Upgrade", "Gigawatt Laser"],
+        "reservedMove": "Solar Ray"
+    },
+    {
+        "species": "Coelamon",
+        "ability": "Data",
+        "moves": ["Water Blitz", "Ice Statue", "Mechanical Claw", "Upgrade", "Anti-Attack Field", "Mass Morph", "Static Electricity", "Delete Program"],
+        "reservedMove": "Variable Darts"
+    },
+    {
+        "species": "Darkrizamon",
+        "ability": "Virus",
+        "moves": ["Heat Breath", "Fire Tower", "Firewall", "Meltdown", "Dark Spirit", "Evil Fantasy", "Shadow Fall", "Mechanical Claw"],
+        "reservedMove": "Dread Fire"
+    },
+    {
+        "species": "Devimon",
+        "ability": "Virus",
+        "moves": ["Dark Spirit", "Wind Cutter", "Evil Fantasy", "Chaos Cloud", "Aurora Freeze", "Evil Squall", "Confused Storm", "Wing Shoes"],
+        "reservedMove": "Death Hand"
+    },
+    {
+        "species": "Dolphmon",
+        "ability": "Vaccine",
+        "moves": ["Water Blitz", "Giga Freeze", "Ocean Wave", "Ice Statue", "War Cry", "Sonic Jab", "Fighting Aura", "Holy Breath", "Saint Heal"],
+        "reservedMove": "Pulse Blast"
+    },
+    {
+        "species": "Dorugamon",
+        "ability": "Data",
+        "moves": ["Burning Heart", "Winter Blast", "Megalo Spark", "Muscle Charge", "Sonic Jab", "Fighting Aura", "Buster Drive", "Mechanical Claw", "Anti-Attack Field"],
+        "reservedMove": "Power Metal"
+    },
+    {
+        "species": "Drimogemon",
+        "ability": "Data",
+        "moves": ["Mechanical Claw", "Delete Program", "Earth Coat", "Mass Morph", "Root Bind", "Rock Fall"],
+        "reservedMove": "Drill Spin"
+    },
+    {
+        "species": "Flarerizamon",
+        "ability": "Data",
+        "moves": ["Heat Breath", "Fire Tower", "Firewall", "Meltdown", "Sonic Jab", "War Cry", "Megaton Punch", "Mechanical Claw"],
+        "reservedMove": "Blaze Buster"
+    },
+    {
+        "species": "Frigimon",
+        "ability": "Vaccine",
+        "moves": ["Hail Spear", "Ice Statue", "Aurora Freeze", "Water Blitz", "Sonic Jab", "Muscle Charge", "Fighting Aura"],
+        "reservedMove": "Sub Zero Ice Punch"
+    },
+    {
+        "species": "Fugamon",
+        "ability": "Virus",
+        "moves": ["Static Electricity", "Wind Cutter", "Megalo Spark", "Blackout", "Muscle Charge", "War Cry", "Rebound Strike", "Megaton Punch"],
+        "reservedMove": "Evil Hurricane"
+    },
+    {
+        "species": "Garurumon",
+        "ability": "Data",
+        "moves": ["War Cry", "Water Blitz", "Fighting Aura", "Burning Heart", "Heat Breath", "Giga Freeze", "Hail Spear", "Meltdown", "Aurora Freeze"],
+        "reservedMove": "Howling Blaster"
+    },
+    {
+        "species": "Gatomon",
+        "ability": "Vaccine",
+        "moves": ["Holy Breath", "Sonic Jab", "Fighting Aura", "Saint Ray", "Saint Heal", "Holy Flash", "Confused Storm"],
+        "reservedMove": "Lightning Paw"
+    },
+    {
+        "species": "Gekomon",
+        "ability": "Data",
+        "moves": ["Hail Spear", "Confused Storm", "Ocean Wave", "Ice Statue", "Giga Freeze", "War Cry", "Charm Perfume"],
+        "reservedMove": "Symphony Crusher"
+    },
+    {
+        "species": "Geremon",
+        "ability": "Virus",
+        "moves": ["Giga Freeze", "Earth Coat", "Bug", "Venom Disaster", "War Cry", "Super Stinky Jet", "Poop Attack Field", "Guerrilla Poop", "Extreme Poop Death"],
+        "reservedMove": "Hyper Smell"
+    },
+    {
+        "species": "Greymon",
+        "ability": "Vaccine",
+        "moves": ["Burning Heart", "Heat Breath", "Fire Tower", "Infinity Burn", "Muscle Charge", "Sonic Jab", "Megalo Spark"],
+        "reservedMove": "Mega Flame"
+    },
+    {
+        "species": "Guardromon",
+        "ability": "Vaccine",
+        "moves": ["Upgrade", "Reverse Program", "Anti-Attack Field", "Gigawatt Laser", "Megalo Spark", "Holy Terrain", "Fire Tower", "Firewall", "Thunder Justice"],
+        "reservedMove": "Guardian Barrage"
+    },
+    {
+        "species": "Gururumon",
+        "ability": "Vaccine",
+        "moves": ["War Cry", "Water Blitz", "Fighting Aura", "Burning Heart", "Blackout", "Giga Freeze", "Dark Spirit", "Evil Fantasy", "Aurora Freeze"],
+        "reservedMove": "Chaos Blaster"
+    },
+    {
+        "species": "Hyogamon",
+        "ability": "Virus",
+        "moves": ["Hail Spear", "Winter Blast", "Ice Statue", "Blackout", "Muscle Charge", "War Cry", "Rebound Strike", "Megaton Punch"],
+        "reservedMove": "Snow Punch"
+    },
+    {
+        "species": "IceDevimon",
+        "ability": "Virus",
+        "moves": ["Water Blitz", "Blackout", "Evil Fantasy", "Ice Statue", "Shadow Fall", "Evil Squall", "Winter Blast", "Giga Freeze"],
+        "reservedMove": "Frozen Claw"
+    },
+    {
+        "species": "Icemon",
+        "ability": "Data",
+        "moves": ["Earth Coat", "Rock Fall", "Hail Spear", "Aurora Freeze", "Giga Freeze", "Megaton Punch", "Fighting Aura"],
+        "reservedMove": "Iceball Bomb"
+    },
+    {
+        "species": "Ikkakumon",
+        "ability": "Vaccine",
+        "moves": ["Hail Spear", "Ocean Wave", "Ice Statue", "Aurora Freeze", "Mechanical Claw", "War Cry", "Rebound Strike"],
+        "reservedMove": "Harpoon Torpedo"
+    },
+    {
+        "species": "JungleMojyamon",
+        "ability": "Vaccine",
+        "moves": ["Earth Coat", "Root Bind", "War Cry", "Muscle Charge", "Sonic Jab", "Fighting Aura", "Super Stinky Jet", "Poop Fling"],
+        "reservedMove": "Jungle Bone"
+    },
+    {
+        "species": "Kabuterimon",
+        "ability": "Vaccine",
+        "moves": ["Confused Storm", "Electric Cloud", "Megalo Spark", "Thunder Justice", "Mass Morph", "Bug", "Rock Fall", "Fighting Aura"],
+        "reservedMove": "Electro Shocker"
+    },
+    {
+        "species": "Kokatorimon",
+        "ability": "Vaccine",
+        "moves": ["Wing Shoes", "Wind Cutter", "Megalo Spark", "Ice Statue", "Cooties Kick", "Poop Toss", "Guerrilla Poop"],
+        "reservedMove": "Frozen Fire Shot"
+    },
+    {
+        "species": "Kuwagamon",
+        "ability": "Virus",
+        "moves": ["Sonic Jab", "Buster Drive", "Mass Morph", "Bug", "Venom Disaster", "Wind Cutter", "Blackout"],
+        "reservedMove": "Scissor Claw"
+    },
+    {
+        "species": "Leomon",
+        "ability": "Vaccine",
+        "moves": ["Muscle Charge", "War Cry", "Sonic Jab", "Meltdown", "Infinity Burn", "Megaton Punch", "Earth Coat", "Holy Terrain", "Burning Heart"],
+        "reservedMove": "Fist of the Beast King"
+    },
+    {
+        "species": "Meicoomon",
+        "ability": "Data",
+        "moves": ["War Cry", "Wind Cutter", "Fighting Aura", "Megaton Punch", "Mechanical Claw", "Venom Disaster", "Shadow Fall", "Saint Ray"],
+        "reservedMove": "X Scratch"
+    },
+    {
+        "species": "Meramon",
+        "ability": "Data",
+        "moves": ["Burning Heart", "Firewall", "Fire Tower", "Infinity Burn", "Holy Flash", "Fighting Aura", "Sonic Jab", "Megaton Punch"],
+        "reservedMove": "Burning Fist"
+    },
+    {
+        "species": "Mikemon",
+        "ability": "Data",
+        "moves": ["War Cry", "Sonic Jab", "Fighting Aura", "Venom Disaster", "Evil Fantasy", "Holy Flash", "Bug"],
+        "reservedMove": "Cat Claw"
+    },
+    {
+        "species": "Mojyamon",
+        "ability": "Vaccine",
+        "moves": ["War Cry", "Muscle Charge", "Sonic Jab", "Fighting Aura", "Hail Spear", "Winter Blast", "Super Stinky Jet", "Poop Fling"],
+        "reservedMove": "Bone Boomerang"
+    },
+    {
+        "species": "Monochromon",
+        "ability": "Data",
+        "moves": ["Heat Breath", "Fire Tower", "Infinity Burn", "Earth Coat", "Rock Fall", "Muscle Charge", "Buster Drive"],
+        "reservedMove": "Volcanic Strike"
+    },
+    {
+        "species": "MoriShellmon",
+        "ability": "Data",
+        "moves": ["Water Blitz", "Ocean Wave", "Earth Coat", "Charm Perfume", "Root Bind", "Venom Disaster", "Sonic Jab"],
+        "reservedMove": "Mind Fog"
+    },
+    {
+        "species": "MudFrigimon",
+        "ability": "Vaccine",
+        "moves": ["Root Bind", "Bug", "Rock Fall", "Mass Morph", "Sonic Jab", "Earth Coat", "Fighting Aura"],
+        "reservedMove": "Mud Ball"
+    },
+    {
+        "species": "Nanimon",
+        "ability": "Virus",
+        "moves": ["Muscle Charge", "Sonic Jab", "Fighting Aura", "Poop Toss", "Poop Attack Field", "Super Stinky Jet", "Evil Fantasy", "Blackout"],
+        "reservedMove": "Poop Dunk"
+    },
+    {
+        "species": "Ninjamon",
+        "ability": "Data",
+        "moves": ["War Cry", "Sonic Jab", "Muscle Charge", "Charm Perfume", "Root Bind", "Earth Coat", "Rebound Strike"],
+        "reservedMove": "Dancing Leaves"
+    },
+    {
+        "species": "NiseDrimogemon",
+        "ability": "Vaccine",
+        "moves": ["War Cry", "Sonic Jab", "Buster Drive", "Rebound Strike", "Mechanical Claw", "Upgrade", "Delete Program", "Reverse Program"],
+        "reservedMove": "Fake Drill Spin"
+    },
+    {
+        "species": "Numemon",
+        "ability": "Virus",
+        "moves": ["Ocean Wave", "Earth Coat", "Bug", "Ice Statue", "War Cry", "Cooties Kick", "Poop Toss", "Guerrilla Poop", "Extreme Poop Death"],
+        "reservedMove": "Nume-Sludge"
+    },
+    {
+        "species": "Ogremon",
+        "ability": "Virus",
+        "moves": ["Fire Tower", "Infinity Burn", "Heat Breath", "Blackout", "Muscle Charge", "War Cry", "Rebound Strike", "Megaton Punch"],
+        "reservedMove": "Pummel Whack"
+    },
+    {
+        "species": "Piddomon",
+        "ability": "Vaccine",
+        "moves": ["Burning Heart", "Firewall", "Infinity Burn", "Holy Breath", "Wind Cutter", "Sonic Jab", "Saint Heal", "Saint Ray", "Holy Judgment"],
+        "reservedMove": "Fire Feather"
+    },
+    {
+        "species": "PlatinumSukamon",
+        "ability": "Vaccine",
+        "moves": ["Earth Coat", "Rock Fall", "Holy Flash", "Mechanical Claw", "Reverse Program", "Delete Program", "Cooties Kick", "Super Stinky Jet", "Guerrilla Poop", "Extreme Poop Death"],
+        "reservedMove": "Rare Metal Poop"
+    },
+    {
+        "species": "RedVegiemon",
+        "ability": "Virus",
+        "moves": ["Heat Breath", "Meltdown", "Prominence Beam", "Mass Morph", "Charm Perfume", "Venom Disaster", "Earth Coat"],
+        "reservedMove": "Chili Pepper Pummel"
+    },
+    {
+        "species": "Rockmon",
+        "ability": "Virus",
+        "moves": ["Mechanical Claw", "Winter Blast", "Giga Freeze", "Gigawatt Laser", "DG Dimension", "Upgrade", "Sonic Jab"],
+        "reservedMove": "Anti-Digi Beam"
+    },
+    {
+        "species": "Saberdramon",
+        "ability": "Virus",
+        "moves": ["Wing Shoes", "Wind Cutter", "Burning Heart", "Blackout", "Fire Tower", "Shadow Fall", "Infinity Burn", "Evil Fantasy"],
+        "reservedMove": "Night Roar"
+    },
+    {
+        "species": "SandYanmamon",
+        "ability": "Virus",
+        "moves": ["Electric Cloud", "Wind Cutter", "Confused Storm", "Thunder Justice", "Earth Coat", "Mass Morph", "Charm Perfume", "Bug", "Holy Flash"],
+        "reservedMove": "Stun Ray"
+    },
+    {
+        "species": "Seadramon",
+        "ability": "Data",
+        "moves": ["Hail Spear", "Water Blitz", "Giga Freeze", "Aurora Freeze", "Heat Breath", "Meltdown", "Holy Breath"],
+        "reservedMove": "Ice Blast"
+    },
+    {
+        "species": "Shellmon",
+        "ability": "Data",
+        "moves": ["Water Blitz", "Winter Blast", "Ocean Wave", "Aurora Freeze", "Mass Morph", "Rock Fall", "Sonic Jab"],
+        "reservedMove": "Hydro Pressure"
+    },
+    {
+        "species": "ShimaUnimon",
+        "ability": "Data",
+        "moves": ["Holy Breath", "Electric Cloud", "Confused Storm", "Saint Heal", "Holy Flash", "Saint Ray", "War Cry", "Fighting Aura", "Sonic Jab", "Buster Drive"],
+        "reservedMove": "Luster Shot"
+    },
+    {
+        "species": "Soulmon",
+        "ability": "Virus",
+        "moves": ["Dark Spirit", "Blackout", "Evil Fantasy", "Shadow Fall", "Mass Morph", "Static Electricity", "Electric Cloud", "Aurora Freeze"],
+        "reservedMove": "Necro Magic"
+    },
+    {
+        "species": "Sukamon",
+        "ability": "Virus",
+        "moves": ["Earth Coat", "Bug", "Rock Fall", "War Cry", "Cooties Kick", "Super Stinky Jet", "Guerrilla Poop", "Extreme Poop Death", "Hide and Seek"],
+        "reservedMove": "Poop"
+    },
+    {
+        "species": "Tankmon",
+        "ability": "Data",
+        "moves": ["Burning Heart", "Heat Breath", "Infinity Burn", "Prominence Beam", "Earth Coat", "Anti-Attack Field", "Gigawatt Laser", "Delete Program", "Upgrade"],
+        "reservedMove": "Hyper Cannon"
+    },
+    {
+        "species": "Togemon",
+        "ability": "Data",
+        "moves": ["Mass Morph", "Charm Perfume", "Root Bind", "Venom Disaster", "Water Blitz", "Muscle Charge", "Sonic Jab", "Fighting Aura", "Megaton Punch"],
+        "reservedMove": "Needle Spray"
+    },
+    {
+        "species": "Tyrannomon",
+        "ability": "Data",
+        "moves": ["Burning Heart", "Heat Breath", "Fire Tower", "Prominence Beam", "Muscle Charge", "Sonic Jab", "Rebound Strike", "Rock Fall"],
+        "reservedMove": "Blaze Blaster"
+    },
+    {
+        "species": "Unimon",
+        "ability": "Vaccine",
+        "moves": ["Wing Shoes", "Megalo Spark", "Thunder Justice", "Confused Storm", "Rock Fall", "Saint Heal", "Holy Judgment", "Saint Ray", "Muscle Charge"],
+        "reservedMove": "Aerial Attack"
+    },
+    {
+        "species": "Vegiemon",
+        "ability": "Virus",
+        "moves": ["Water Blitz", "Giga Freeze", "Ocean Wave", "Mass Morph", "Charm Perfume", "Venom Disaster", "Earth Coat"],
+        "reservedMove": "Sweet Breath"
+    },
+    {
+        "species": "Weedmon",
+        "ability": "Virus",
+        "moves": ["Super Stinky Jet", "Poop Attack Field", "Extreme Poop Death", "Mass Morph", "Charm Perfume", "Venom Disaster", "Earth Coat"],
+        "reservedMove": "Deadly Weed"
+    },
+    {
+        "species": "Yanmamon",
+        "ability": "Virus",
+        "moves": ["Electric Cloud", "Wind Cutter", "Confused Storm", "Thunder Justice", "Earth Coat", "Mass Morph", "Charm Perfume", "Bug", "Holy Flash"],
+        "reservedMove": "Thunder Ray"
+    },
+    {
+        "species": "Andromon",
+        "ability": "Vaccine",
+        "moves": ["Wind Cutter", "Electric Cloud", "Megalo Spark", "Thunder Justice", "Upgrade", "Anti-Attack Field", "Delete Program", "Gigawatt Laser", "Bug"],
+        "reservedMove": "Spiral Sword"
+    },
+    {
+        "species": "Angewomon",
+        "ability": "Vaccine",
+        "moves": ["Wing Shoes", "Wind Cutter", "Thunder Justice", "Fighting Aura", "Electric Cloud", "Saint Heal", "Holy Breath", "Holy Flash", "Saint Ray", "War Cry"],
+        "reservedMove": "Celestial Arrow"
+    },
+    {
+        "species": "Beastmon",
+        "ability": "Virus",
+        "moves": ["War Cry", "Sonic Jab", "Megaton Punch", "Venom Disaster", "Shadow Fall", "Giga Freeze", "Bug", "Ice Statue"],
+        "reservedMove": "Vampire Wave"
+    },
+    {
+        "species": "BlackWereGarurumon",
+        "ability": "Virus",
+        "moves": ["War Cry", "Muscle Charge", "Sonic Jab", "Megaton Punch", "Rock Fall", "Burning Heart", "Heat Breath", "Evil Squall", "Hide and Seek", "Winter Blast", "Giga Freeze"],
+        "reservedMove": "Full Moon Kick"
+    },
+    {
+        "species": "BlueMeramon",
+        "ability": "Vaccine",
+        "moves": ["Burning Heart", "Firewall", "Meltdown", "Infinity Burn", "Aurora Freeze", "Holy Flash", "Fighting Aura", "Giga Freeze"],
+        "reservedMove": "Cold Flame"
+    },
+    {
+        "species": "Digitamamon",
+        "ability": "Data",
+        "moves": ["Hail Spear", "Blackout", "Bug", "Shadow Fall", "Fire Tower", "Poop Attack Field", "Poop Fling", "Upgrade"],
+        "reservedMove": "Nightmare Syndrome"
+    },
+    {
+        "species": "DoruGreymon",
+        "ability": "Data",
+        "moves": ["Burning Heart", "Infinity Burn", "Megalo Spark", "Muscle Charge", "Sonic Jab", "Fighting Aura", "Buster Drive", "Mechanical Claw", "Anti-Attack Field"],
+        "reservedMove": "Metal Meteor"
+    },
+    {
+        "species": "Etemon",
+        "ability": "Virus",
+        "moves": ["Earth Coat", "Rock Fall", "Sonic Jab", "Megaton Punch", "Charm Perfume", "Bug", "Guerrilla Poop", "Extreme Poop Death"],
+        "reservedMove": "Love Serenade"
+    },
+    {
+        "species": "Garudamon",
+        "ability": "Vaccine",
+        "moves": ["Wing Shoes", "Wind Cutter", "Burning Heart", "Fire Tower", "Meltdown", "Infinity Burn", "War Cry", "Buster Drive", "Holy Flash"],
+        "reservedMove": "Shadow Wing"
+    },
+    {
+        "species": "Gigadramon",
+        "ability": "Data",
+        "moves": ["Upgrade", "Gigawatt Laser", "DG Dimension", "Dark Spirit", "Hide and Seek", "Wind Cutter", "Electric Cloud", "Giga Freeze"],
+        "reservedMove": "Energy Shot"
+    },
+    {
+        "species": "Giromon",
+        "ability": "Vaccine",
+        "moves": ["Upgrade", "Delete Program", "Reverse Program", "Rebound Strike", "Megaton Punch", "Static Electricity", "Megalo Spark", "Firewall"],
+        "reservedMove": "Deadly Bomb"
+    },
+    {
+        "species": "IceLeomon",
+        "ability": "Data",
+        "moves": ["Muscle Charge", "War Cry", "Giga Freeze", "Ice Statue", "Megaton Punch", "Winter Blast", "Aurora Freeze", "Holy Terrain", "Burning Heart"],
+        "reservedMove": "Fist of Ice"
+    },
+    {
+        "species": "LadyDevimon",
+        "ability": "Virus",
+        "moves": ["Wing Shoes", "Wind Cutter", "Evil Squall", "Fighting Aura", "Electric Cloud", "Evil Fantasy", "Charm Perfume", "Dark Spirit", "Chaos Cloud", "War Cry"],
+        "reservedMove": "Darkness Wave"
+    },
+    {
+        "species": "Lillymon",
+        "ability": "Data",
+        "moves": ["Earth Coat", "Charm Perfume", "Root Bind", "Venom Disaster", "Wing Shoes", "Wind Cutter", "Confused Storm", "Saint Heal", "Holy Breath"],
+        "reservedMove": "Flower Cannon"
+    },
+    {
+        "species": "MagnaAngemon",
+        "ability": "Vaccine",
+        "moves": ["Saint Heal", "Holy Terrain", "Shining Nova", "Thunder Justice", "Anti-Attack Field", "Gigawatt Laser", "Delete Program", "Sonic Jab", "Megalo Spark", "Rebound Strike", "Holy Judgment", "Wing Shoes"],
+        "reservedMove": "Gate of Destiny"
+    },
+    {
+        "species": "Mamemon",
+        "ability": "Data",
+        "moves": ["Muscle Charge", "Sonic Jab", "Fighting Aura", "Rebound Strike", "Anti-Attack Field", "Upgrade", "Reverse Program", "Gigawatt Laser", "Giga Freeze", "Burning Heart"],
+        "reservedMove": "Smile Bomber"
+    },
+    {
+        "species": "Megadramon",
+        "ability": "Virus",
+        "moves": ["Mechanical Claw", "Upgrade", "Delete Program", "Blackout", "Shadow Fall", "Static Electricity", "Megalo Spark", "Fire Tower"],
+        "reservedMove": "Genocide Attack"
+    },
+    {
+        "species": "MegaKabuterimon",
+        "ability": "Vaccine",
+        "moves": ["Static Electricity", "Rock Fall", "Megaton Punch", "Megalo Spark", "Rebound Strike", "Earth Coat", "Mass Morph", "Bug"],
+        "reservedMove": "Horn Buster"
+    },
+    {
+        "species": "MegaSeadramon",
+        "ability": "Data",
+        "moves": ["Hail Spear", "Water Blitz", "Giga Freeze", "Aurora Freeze", "Heat Breath", "Meltdown", "Shining Nova", "Static Electricity", "Megalo Spark"],
+        "reservedMove": "Lightning Javelin"
+    },
+    {
+        "species": "meicrackmon",
+        "ability": "Vaccine",
+        "moves": ["War Cry", "Wind Cutter", "Fighting Aura", "Megaton Punch", "Mechanical Claw", "Venom Disaster", "Holy Judgment", "Saint Ray", "Holy Breath"],
+        "reservedMove": "Modestly Stun"
+    },
+    {
+        "species": "meicrackmonviciousmode",
+        "ability": "Virus",
+        "moves": ["War Cry", "Wind Cutter", "Fighting Aura", "Megaton Punch", "Mechanical Claw", "Venom Disaster", "Shadow Fall", "Evil Squall", "Blackout"],
+        "reservedMove": "Berserk Thinking"
+    },
+    {
+        "species": "metalgreymonvaccine",
+        "ability": "Vaccine",
+        "moves": ["Burning Heart", "Heat Breath", "Fire Tower", "Infinity Burn", "Muscle Charge", "Sonic Jab", "Rebound Strike", "Buster Drive", "Mechanical Claw", "Gigawatt Laser", "Delete Program"],
+        "reservedMove": "Giga Destroyer"
+    },
+    {
+        "species": "metalgreymonvirus",
+        "ability": "Virus",
+        "moves": ["Burning Heart", "Heat Breath", "Fire Tower", "Infinity Burn", "Muscle Charge", "Sonic Jab", "Blackout", "Shadow Fall", "Mechanical Claw", "Gigawatt Laser", "Delete Program"],
+        "reservedMove": "Revenge Flame"
+    },
+    {
+        "species": "MetalMamemon",
+        "ability": "Data",
+        "moves": ["Muscle Charge", "Mechanical Claw", "Fighting Aura", "Rebound Strike", "Delete Program", "Upgrade", "Reverse Program", "Megalo Spark", "Winter Blast", "Burning Heart"],
+        "reservedMove": "Energy Bomb"
+    },
+    {
+        "species": "Meteormon",
+        "ability": "Data",
+        "moves": ["Earth Coat", "Rock Fall", "Heat Breath", "Prominence Beam", "Giga Freeze", "Megaton Punch", "Fighting Aura"],
+        "reservedMove": "Galactic Flare"
+    },
+    {
+        "species": "Monzaemon",
+        "ability": "Vaccine",
+        "moves": ["Fighting Aura", "Poop Attack Field", "Rebound Strike", "Megaton Punch", "Saint Heal", "Holy Breath", "Holy Terrain", "Saint Ray", "Charm Perfume"],
+        "reservedMove": "Hearts Attack"
+    },
+    {
+        "species": "Myotismon",
+        "ability": "Virus",
+        "moves": ["Dark Spirit", "Blackout", "Evil Fantasy", "Electric Cloud", "Aurora Freeze", "Evil Squall", "Wing Shoes", "Confused Storm", "Venom Disaster", "Reverse Program"],
+        "reservedMove": "Grisly Wing"
+    },
+    {
+        "species": "Piximon",
+        "ability": "Data",
+        "moves": ["Saint Heal", "Holy Breath", "Holy Terrain", "Fighting Aura", "Shining Nova", "Wing Shoes", "Wind Cutter", "Electric Cloud", "Anti-Attack Field", "Earth Coat", "Bug"],
+        "reservedMove": "Pit Bomb"
+    },
+    {
+        "species": "ShogunGekomon",
+        "ability": "Data",
+        "moves": ["Earth Coat", "Confused Storm", "Ocean Wave", "Ice Statue", "Giga Freeze", "Aurora Freeze", "War Cry", "Fighting Aura", "Charm Perfume"],
+        "reservedMove": "Musical Fist"
+    },
+    {
+        "species": "SkullGreymon",
+        "ability": "Virus",
+        "moves": ["Blackout", "Shadow Fall", "Evil Fantasy", "Evil Squall", "Heat Breath", "Fire Tower", "Infinity Burn", "Sonic Jab", "Rebound Strike", "Buster Drive", "Mechanical Claw", "Delete Program"],
+        "reservedMove": "Oblivion Bird"
+    },
+    {
+        "species": "Tekkamon",
+        "ability": "Virus",
+        "moves": ["Upgrade", "Delete Program", "Reverse Program", "Rebound Strike", "Megaton Punch", "Static Electricity", "Shadow Fall", "Firewall"],
+        "reservedMove": "Frag Bomb"
+    },
+    {
+        "species": "Vademon",
+        "ability": "Virus",
+        "moves": ["Mass Morph", "Charm Perfume", "Bug", "Rock Fall", "Upgrade", "Delete Program", "DG Dimension", "Cooties Kick"],
+        "reservedMove": "Unidentified Flying Kiss"
+    },
+    {
+        "species": "Vermilimon",
+        "ability": "Data",
+        "moves": ["Heat Breath", "Fire Tower", "Infinity Burn", "Prominence Beam", "Earth Coat", "Rock Fall", "Muscle Charge", "Buster Drive"],
+        "reservedMove": "Volcanic Strike S"
+    },
+    {
+        "species": "WaruMonzaemon",
+        "ability": "Virus",
+        "moves": ["Fighting Aura", "Poop Attack Field", "Rebound Strike", "Megaton Punch", "Dark Spirit", "Evil Fantasy", "Hide and Seek", "Charm Perfume"],
+        "reservedMove": "Heartbreak Attack"
+    },
+    {
+        "species": "WaruSeadramon",
+        "ability": "Virus",
+        "moves": ["Hail Spear", "Water Blitz", "Giga Freeze", "Aurora Freeze", "Heat Breath", "Meltdown", "Static Electricity", "Megalo Spark", "Evil Squall"],
+        "reservedMove": "Evil Icicle"
+    },
+    {
+        "species": "WereGarurumon",
+        "ability": "Data",
+        "moves": ["War Cry", "Muscle Charge", "Sonic Jab", "Megaton Punch", "Rock Fall", "Burning Heart", "Heat Breath", "Ice Statue", "Aurora Freeze", "Winter Blast", "Giga Freeze"],
+        "reservedMove": "Wolf Claw"
+    },
+    {
+        "species": "Whamon",
+        "ability": "Vaccine",
+        "moves": ["Water Blitz", "Ocean Wave", "Ice Statue", "Aurora Freeze", "Mass Morph", "Charm Perfume", "Holy Terrain", "Confused Storm", "Buster Drive", "Saint Heal"],
+        "reservedMove": "Tidal Wave"
+    },
+    {
+        "species": "Zudomon",
+        "ability": "Vaccine",
+        "moves": ["Electric Cloud", "Thunder Justice", "Hail Spear", "Ice Statue", "Mechanical Claw", "Aurora Freeze", "Anti-Attack Field", "War Cry", "Rebound Strike"],
+        "reservedMove": "Vulcan's Hammer"
+    },
+    {
+        "species": "Alphamon",
+        "ability": "Vaccine",
+        "moves": ["Holy Terrain", "Saint Ray", "Holy Judgment", "Shining Nova", "War Cry", "Sonic Jab", "Rebound Strike", "Upgrade", "Delete Program", "DG Dimension", "Burning Heart", "Thunder Justice"],
+        "reservedMove": "Blade of the Dragon King"
+    },
+    {
+        "species": "BlackMetalGarurumon",
+        "ability": "Virus",
+        "moves": ["War Cry", "Mechanical Claw", "Megalo Spark", "Winter Blast", "Giga Freeze", "Ice Statue", "Shadow Fall", "Evil Fantasy", "Aurora Freeze"],
+        "reservedMove": "Garuru Tomahawk"
+    },
+    {
+        "species": "BlackWarGreymon",
+        "ability": "Virus",
+        "moves": ["Burning Heart", "Fire Tower", "Firewall", "Shadow Fall", "Muscle Charge", "Blackout", "Buster Drive", "Mechanical Claw", "Anti-Attack Field", "Delete Program", "Evil Fantasy"],
+        "reservedMove": "Black Tornado"
+    },
+    {
+        "species": "Boltmon",
+        "ability": "Data",
+        "moves": ["Electric Cloud", "Megalo Spark", "Fighting Aura", "Megaton Punch", "Mechanical Claw", "Gigawatt Laser", "Meltdown", "Infinity Burn"],
+        "reservedMove": "Tomahawk Stinger"
+    },
+    {
+        "species": "CherubimonEvil",
+        "ability": "Virus",
+        "moves": ["Wing Shoes", "Thunder Justice", "Megalo Spark", "Megaton Punch", "Blackout", "Chaos Cloud", "Shadow Fall", "Evil Squall", "DG Dimension", "Gigawatt Laser"],
+        "reservedMove": "Lightning Spear"
+    },
+    {
+        "species": "CherubimonGood",
+        "ability": "Vaccine",
+        "moves": ["Wing Shoes", "Thunder Justice", "Megalo Spark", "Megaton Punch", "Holy Breath", "Saint Ray", "Holy Judgment", "Shining Nova", "DG Dimension", "Gigawatt Laser"],
+        "reservedMove": "Heaven's Judgment"
+    },
+    {
+        "species": "Devitamamon",
+        "ability": "Data",
+        "moves": ["Hail Spear", "Blackout", "Evil Fantasy", "Shadow Fall", "Evil Squall", "Poop Attack Field", "Extreme Poop Death", "Fire Tower"],
+        "reservedMove": "Black Death Cloud"
+    },
+    {
+        "species": "Dorugoramon",
+        "ability": "Data",
+        "moves": ["Burning Heart", "Infinity Burn", "Prominence Beam", "Megalo Spark", "Thunder Justice", "Fighting Aura", "Buster Drive", "Sonic Jab", "Mechanical Claw", "Anti-Attack Field", "Delete Program", "Gigawatt Laser"],
+        "reservedMove": "Brave Metal"
+    },
+    {
+        "species": "Ebemon",
+        "ability": "Virus",
+        "moves": ["Confused Storm", "Electric Cloud", "Mass Morph", "Bug", "Upgrade", "Gigawatt Laser", "DG Dimension", "Cooties Kick"],
+        "reservedMove": "Brain Rupture"
+    },
+    {
+        "species": "HerculesKabuterimon",
+        "ability": "Data",
+        "moves": ["Confused Storm", "Electric Cloud", "Megalo Spark", "Thunder Justice", "Charm Perfume", "Mass Morph", "Bug", "Holy Terrain", "Holy Flash", "Fighting Aura"],
+        "reservedMove": "Giga Blaster"
+    },
+    {
+        "species": "HiAndromon",
+        "ability": "Vaccine",
+        "moves": ["Sonic Jab", "Electric Cloud", "Megalo Spark", "Thunder Justice", "Saint Heal", "Upgrade", "Anti-Attack Field", "Delete Program", "Gigawatt Laser", "Bug", "Buster Drive", "Megaton Punch"],
+        "reservedMove": "Atomic Ray"
+    },
+    {
+        "species": "Lilithmon",
+        "ability": "Virus",
+        "moves": ["Evil Fantasy", "Chaos Cloud", "Shadow Fall", "Wind Cutter", "Confused Storm", "Charm Perfume", "Venom Disaster", "Bug", "Aurora Freeze", "Mechanical Claw"],
+        "reservedMove": "Phantom Pain"
+    },
+    {
+        "species": "Machinedramon",
+        "ability": "Virus",
+        "moves": ["Mechanical Claw", "Upgrade", "Gigawatt Laser", "DG Dimension", "Megalo Spark", "Thunder Justice", "Electric Cloud", "Hide and Seek", "Firewall", "Giga Freeze"],
+        "reservedMove": "Infinity Cannon"
+    },
+    {
+        "species": "Magnadramon",
+        "ability": "Vaccine",
+        "moves": ["Saint Heal", "Holy Breath", "Holy Flash", "Holy Judgment", "Burning Heart", "Fire Tower", "Prominence Beam", "Wing Shoes", "Buster Drive", "Fighting Aura"],
+        "reservedMove": "Fire Tornado"
+    },
+    {
+        "species": "MarineAngemon",
+        "ability": "Vaccine",
+        "moves": ["Water Blitz", "Ocean Wave", "Aurora Freeze", "Ice Statue", "Saint Heal", "Holy Breath", "Holy Terrain", "Shining Nova", "Confused Storm", "Wing Shoes", "Anti-Attack Field", "Earth Coat"],
+        "reservedMove": "Ocean Love"
+    },
+    {
+        "species": "MetalEtemon",
+        "ability": "Virus",
+        "moves": ["Reverse Program", "DG Dimension", "Upgrade", "Gigawatt Laser", "Charm Perfume", "Holy Flash", "Guerrilla Poop", "Extreme Poop Death"],
+        "reservedMove": "Dark Recital"
+    },
+    {
+        "species": "MetalGarurumon",
+        "ability": "Data",
+        "moves": ["War Cry", "Mechanical Claw", "Buster Drive", "Winter Blast", "Giga Freeze", "Ice Statue", "Rock Fall", "Meltdown", "Aurora Freeze"],
+        "reservedMove": "Ice Wolf Claw"
+    },
+    {
+        "species": "MetalSeadramon",
+        "ability": "Data",
+        "moves": ["Water Blitz", "Winter Blast", "Ocean Wave", "Ice Statue", "Infinity Burn", "Static Electricity", "Megalo Spark", "Upgrade", "Delete Program"],
+        "reservedMove": "River of Power"
+    },
+    {
+        "species": "Ophanimon",
+        "ability": "Vaccine",
+        "moves": ["Wing Shoes", "Wind Cutter", "Thunder Justice", "Fighting Aura", "Aurora Freeze", "Saint Heal", "Holy Breath", "Holy Terrain", "Saint Ray", "War Cry"],
+        "reservedMove": "Eden's Javelin"
+    },
+    {
+        "species": "Phoenixmon",
+        "ability": "Vaccine",
+        "moves": ["Wing Shoes", "Wind Cutter", "Thunder Justice", "Burning Heart", "Meltdown", "Prominence Beam", "War Cry", "Buster Drive", "Holy Judgment", "Shining Nova", "Infinity Burn"],
+        "reservedMove": "Starlight Explosion"
+    },
+    {
+        "species": "PrinceMamemon",
+        "ability": "Data",
+        "moves": ["Muscle Charge", "Sonic Jab", "Megaton Punch", "Fighting Aura", "Upgrade", "Reverse Program", "Delete Program", "DG Dimension", "Holy Flash", "Poop Attack Field"],
+        "reservedMove": "Smile Warhead"
+    },
+    {
+        "species": "Raguelmon",
+        "ability": "Virus",
+        "moves": ["War Cry", "Wind Cutter", "Fighting Aura", "Megaton Punch", "Mechanical Claw", "Venom Disaster", "Shadow Fall", "Evil Squall", "Blackout", "Delete Program"],
+        "reservedMove": "Darkness Zone"
+    },
+    {
+        "species": "Rasielmon",
+        "ability": "Vaccine",
+        "moves": ["War Cry", "Wind Cutter", "Fighting Aura", "Megaton Punch", "Mechanical Claw", "Venom Disaster", "Holy Judgment", "Saint Ray", "Holy Breath", "DG Dimension"],
+        "reservedMove": "Knowledge Stream"
+    },
+    {
+        "species": "Rosemon",
+        "ability": "Data",
+        "moves": ["Earth Coat", "Charm Perfume", "Root Bind", "Venom Disaster", "Wing Shoes", "Confused Storm", "Evil Fantasy", "Saint Heal", "Shining Nova"],
+        "reservedMove": "Thorn Whip"
+    },
+    {
+        "species": "SaberLeomon",
+        "ability": "Data",
+        "moves": ["Muscle Charge", "War Cry", "Fighting Aura", "Buster Drive", "Earth Coat", "Venom Disaster", "Holy Terrain", "Holy Judgment", "Mechanical Claw", "Burning Heart", "Infinity Burn", "Shining Nova"],
+        "reservedMove": "Howling Crusher"
+    },
+    {
+        "species": "Seraphimon",
+        "ability": "Vaccine",
+        "moves": ["Saint Heal", "Holy Terrain", "Shining Nova", "Thunder Justice", "Anti-Attack Field", "Gigawatt Laser", "Delete Program", "Sonic Jab", "Megalo Spark", "Rebound Strike", "Holy Judgment", "Wing Shoes"],
+        "reservedMove": "Strike of the Seven Stars"
+    },
+    {
+        "species": "VenomMyotismon",
+        "ability": "Virus",
+        "moves": ["Dark Spirit", "Blackout", "Evil Fantasy", "Megalo Spark", "Ice Statue", "Shadow Fall", "Wing Shoes", "Static Electricity", "Venom Disaster", "Delete Program"],
+        "reservedMove": "Venom Infusion"
+    },
+    {
+        "species": "Vikemon",
+        "ability": "Vaccine",
+        "moves": ["Hail Spear", "Winter Blast", "Ice Statue", "Aurora Freeze", "Mechanical Claw", "Anti-Attack Field", "War Cry", "Rebound Strike", "Megaton Punch", "Holy Flash"],
+        "reservedMove": "Arctic Blizzard"
+    },
+    {
+        "species": "WarGreymon",
+        "ability": "Vaccine",
+        "moves": ["Burning Heart", "Fire Tower", "Firewall", "Infinity Burn", "Muscle Charge", "Sonic Jab", "Buster Drive", "Mechanical Claw", "Anti-Attack Field", "Delete Program", "Fighting Aura"],
+        "reservedMove": "Terra Force"
+    }
+];

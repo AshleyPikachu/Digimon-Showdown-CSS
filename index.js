@@ -24,7 +24,7 @@ readdirSync(DATA_DIR).forEach(dataFile => {
 const graphicResources = {
     move_panels: {},
     battle_type_images: {},
-    icon_sheet: 'https://res.cloudinary.com/dragotic/image/upload/v1560756961/icons_sheet.png',
+    icon_sheet: 'https://play.pokemonshowdown.com/sprites/digimon/sprites/digimonicons-sheet.png',
     battle_background: 'https://sig.grumpybumpers.com/host/Dragotic.gif',
     digivice_sheet: 'https://res.cloudinary.com/dragotic/image/upload/v1560757847/digivice_sheet.png',
 };

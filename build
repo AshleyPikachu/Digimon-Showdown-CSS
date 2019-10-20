@@ -62,16 +62,19 @@ console.log(`"${DS_OUTPUT_DIR}/moves.json" has been written.`);
 let row = 0, col = 0;
 
 // overwrites the existing names
-const digimonFormes = [
-    'MeicrackmonViciousMode',
-    'CherubimonEvil', 'CherubimonGood',
-    'MetalGreymonVaccine', 'MetalGreymonVirus',
-];
+const digimonFormesObj = {
+    'MeicrackmonViciousMode': 'Meicrackmon',
+    'CherubimonEvil': 'Cherubimon',
+    'CherubimonGood': 'Cherubimon',
+    'MetalGreymonVaccine': 'MetalGreymon',
+    'MetalGreymonVirus': 'MetalGreymon',
+};
+const digimonFormes = Object.keys(digimonFormesObj);
 
 Object.entries(digimonShowdown.dex).forEach(digimon => {
     let [digimonName, digimonData] = digimon;
     let hasFormes = digimonFormes.includes(digimonData.species);
-    if (hasFormes) digimonData.name = digimonShowdown.sets[digimonData.species].name;
+    if (hasFormes) digimonData.name = digimonFormesObj[digimonData.species];
 
     exportable.dex[digimonName] = {
         id: digimonName,
