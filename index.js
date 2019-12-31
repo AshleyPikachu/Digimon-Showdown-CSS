@@ -32,7 +32,7 @@ const graphicResources = {
 Object.keys(digimonShowdown.types).forEach(type => {
     type = type.toLowerCase();
 
-    graphicResources.move_panels[type] = `http://play.pokemonshowdown.com/sprites/digimon/plugin-css/${type.toLowerCase()}-panel.png`;
+    graphicResources.move_panels[type] = `http://play.pokemonshowdown.com/sprites/digimon/plugin-css/${type}-panel.png`;
     graphicResources.battle_type_images[type] = `http://play.pokemonshowdown.com/sprites/digimon/sprites/types/${type.charAt(0).toUpperCase() + type.slice(1)}.png`; 
 });
 
