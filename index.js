@@ -25,15 +25,15 @@ const graphicResources = {
     move_panels: {},
     battle_type_images: {},
     icon_sheet: 'https://play.pokemonshowdown.com/sprites/digimon/sprites/digimonicons-sheet.png',
-    battle_background: 'https://sig.grumpybumpers.com/host/Dragotic.gif',
+    battle_background: 'https://sig.grumpybumpers.com/host/DragoticPS.gif',
     digivice_sheet: 'https://res.cloudinary.com/dragotic/image/upload/v1560757847/digivice_sheet.png',
 };
 
 Object.keys(digimonShowdown.types).forEach(type => {
     type = type.toLowerCase();
 
-    graphicResources.move_panels[type] = `https://res.cloudinary.com/dragotic/image/upload/v1560756606/move_panels/${type}_panel.png`;
-    graphicResources.battle_type_images[type] = `https://res.cloudinary.com/dragotic/image/upload/v1560757457/battle_type_images/${type}.png`; 
+    graphicResources.move_panels[type] = `http://play.pokemonshowdown.com/sprites/digimon/plugin-css/${type.toLowerCase()}-panel.png`;
+    graphicResources.battle_type_images[type] = `http://play.pokemonshowdown.com/sprites/digimon/sprites/types/${type.charAt(0).toUpperCase() + type.slice(1)}.png`; 
 });
 
 // MOVE CATEGORIES ABBREVIATED
